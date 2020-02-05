@@ -25,6 +25,8 @@ class WCV_Product_Meta {
 		add_action( 'add_meta_boxes'   , array( $this, 'change_author_meta_box_title' ) );
 		add_action( 'wp_dropdown_users', array( $this, 'author_vendor_roles' ), 0, 1 );
 		add_action( 'restrict_manage_posts', array( $this, 'restrict_manage_posts' ), 12 );
+		add_filter( 'parse_query', array( $this, 'vendor_filter_query' ) );
+
 
 		if ( apply_filters( 'wcv_product_commission_tab', true ) ) {
 			add_action( 'woocommerce_product_write_panel_tabs', array( $this, 'add_tab' ) );
@@ -510,4 +512,25 @@ class WCV_Product_Meta {
 		$response->results = $wpdb->get_results( $sql );
 		wp_send_json($response);
 	}
+
+
+	/**
+	 * Filter wp query for the product post type
+	 *
+	 * @since    2.1.19
+	 */
+	public function vendor_filter_query( $query ) {
+
+		global $typenow, $wp_query;
+
+		if ( 'product' == $typenow ) {
+
+			if ( isset( $_GET['vendor'] ) ) {
+
+				$query->query_vars['author'] = $_GET['vendor'];
+
+			}
+		}
+
+	} // vendor_filter_query()
 }
