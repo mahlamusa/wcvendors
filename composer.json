@@ -19,5 +19,9 @@
       "./inc/wcv-vendor-functions.php",
       "./inc/wcv-admin-functions.php"
     ]
+  },
+  "scripts": {
+    "lint": "./vendor/bin/phpcs --warning-severity=0 -s --ignore-annotations --extensions=php,html .",
+    "fix": "./vendor/bin/phpcbf --warning-severity=0 -s --ignore-annotations --extensions=php,html ."
   }
 }

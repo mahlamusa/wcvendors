@@ -122,8 +122,8 @@
       "git add"
     ],
     "*.php": [
-      "./vendor/bin/phpcbf -q",
-      "./vendor/bin/phpcs",
+      "./vendor/bin/phpcbf --warning-severity=0 -s --ignore-annotations --extensions=php,html .",
+      "./vendor/bin/phpcs --warning-severity=0 -s --ignore-annotations --extensions=php,html .",
       "git add"
     ]
   }
