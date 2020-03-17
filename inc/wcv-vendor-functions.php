@@ -180,7 +180,7 @@ function wcv_get_vendors_from_order( $order, $items = false ) {
 
 	return apply_filters( 'wcvendors_get_vendors_from_order', $vendors, $order );
 }
-	
+
 /**
  * Get a vendor from a product.
  *

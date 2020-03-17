@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 echo '= ' . $email_heading . " =\n\n";
 
 echo sprintf( __( 'Hi there. You or another admin has approved a user to be a %1$s on %2$s.', 'wc-vendors' ), wcv_get_vendor_name( true, false ), get_option( 'blogname' ) ) . "\n\n";
-echo sprintf( __( 'Application status: %s', 'wc-vendors' ), esc_attr(ucfirst( $status ) ) );
+echo sprintf( __( 'Application status: %s', 'wc-vendors' ), esc_attr( ucfirst( $status ) ) );
 echo sprintf( __( 'Approved username: %s', 'wc-vendors' ), esc_attr( $user->user_login ) ) . "\n\n";
 
 

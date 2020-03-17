@@ -4,7 +4,6 @@
  *
  * This template can be overridden by copying it to yourtheme/woocommerce/emails/plain/vendor-notify-cancelled-order.php.
  *
- *
  * @author         Jamie Madden, WC Vendors
  * @package        WCvendors/Templates/Emails/Plain
  * @version        2.0.0
@@ -14,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-echo "= " . $email_heading . " =\n\n";
+echo '= ' . $email_heading . " =\n\n";
 
 echo __( 'Your order has been cancelled.', 'wc-vendors' ) . "\n\n"; // WPCS: XSS ok.
 

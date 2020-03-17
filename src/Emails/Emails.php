@@ -27,25 +27,25 @@ class Emails {
 	 * @since   3.0
 	 */
 	public function init_hooks() {
-		add_filter( 'woocommerce_email_classes'                     , array( $this, 'email_classes' ) );
-		add_filter( 'woocommerce_order_actions'                     , array( $this, 'order_actions' ) );
+		add_filter( 'woocommerce_email_classes', array( $this, 'email_classes' ) );
+		add_filter( 'woocommerce_order_actions', array( $this, 'order_actions' ) );
 		add_action( 'woocommerce_order_action_send_vendor_new_order', array( $this, 'order_actions_save' ) );
 
 		// Low stock
 		// These fatal error in WC3.3.3 @todo fix !
 		add_filter( 'woocommerce_email_recipient_low_stock', array( $this, 'vendor_low_stock_email' ), 10, 2 );
-		add_filter( 'woocommerce_email_recipient_no_stock' , array( $this, 'vendor_no_stock_email' ), 10, 2 );
+		add_filter( 'woocommerce_email_recipient_no_stock', array( $this, 'vendor_no_stock_email' ), 10, 2 );
 		add_filter( 'woocommerce_email_recipient_backorder', array( $this, 'vendor_backorder_stock_email' ), 10, 2 );
 
 		// New emails
 		// Triggers
-		add_action( 'wcvendors_vendor_ship'           , array( $this, 'vendor_shipped' )         , 10, 3 );
-		add_action( 'wcvendors_email_order_details'   , array( $this, 'vendor_order_details' )   , 10, 8 );
+		add_action( 'wcvendors_vendor_ship', array( $this, 'vendor_shipped' ), 10, 3 );
+		add_action( 'wcvendors_email_order_details', array( $this, 'vendor_order_details' ), 10, 8 );
 		add_action( 'wcvendors_email_customer_details', array( $this, 'vendor_customer_details' ), 10, 4 );
 
 		// Trigger application emails as required.
 		add_action( 'add_user_role', array( $this, 'vendor_application' ), 10, 2 );
-		add_action( 'wcvendors_deny_vendor' , array( $this, 'deny_application' ) );
+		add_action( 'wcvendors_deny_vendor', array( $this, 'deny_application' ) );
 
 		// WooCommerce Product Enquiry Compatibility
 		add_filter( 'product_enquiry_send_to', array( $this, 'product_enquiry_compatibility' ), 10, 2 );
@@ -86,7 +86,7 @@ class Emails {
 	/**
 	 * Add the vendor email to the low stock emails.
 	 *
-	 * @param array $emails The currently registered email.
+	 * @param array      $emails The currently registered email.
 	 * @param WC_Product $product The WC_Product object.
 	 */
 	public function vendor_stock_email( $emails, $product ) {
@@ -113,14 +113,14 @@ class Emails {
 	 * @version 3.0.0
 	 * @since 2.1.10
 	 *
-	 * @param array $emails The currently registered emails.
+	 * @param array      $emails The currently registered emails.
 	 * @param WC_Product $product The product object.
 	 */
 	public function vendor_low_stock_email( $emails, $product ) {
 		if ( 'no' === get_option( 'wcvendors_notify_low_stock', 'yes' ) ) {
 			return $emails;
 		}
-		return $this->vendor_stock_email(  $emails, $product );
+		return $this->vendor_stock_email( $emails, $product );
 	}
 
 	/**
@@ -129,7 +129,7 @@ class Emails {
 	 * @since 2.1.10
 	 * @version 2.1.0
 	 *
-	 * @param array $emails The registered emails.
+	 * @param array      $emails The registered emails.
 	 * @param WC_Product $product The WC_Product object.
 	 */
 	public function vendor_no_stock_email( $emails, $product ) {
@@ -145,7 +145,7 @@ class Emails {
 	 * @since 2.1.10
 	 * @version 2.1.0
 	 *
-	 * @param array $emails The registered emails.
+	 * @param array                         $emails The registered emails.
 	 * @param WC_Product The product object.
 	 * @return void.
 	 */
@@ -196,8 +196,8 @@ class Emails {
 	 * @version 3.0.0
 	 * @since   2.0.0
 	 *
-	 * @param int $order_id The order ID.
-	 * @param int $user_id The user ID
+	 * @param int      $order_id The order ID.
+	 * @param int      $user_id The user ID
 	 * @param WC_Order $order The order object.
 	 */
 	public function vendor_shipped( $order_id, $user_id, $order ) {
@@ -216,8 +216,8 @@ class Emails {
 	 * @since 2.0.0
 	 * @version 2.1.7
 	 *
-	 * @param int $user_id The user ID.
-	 * @param string $role The user's role. 
+	 * @param int    $user_id The user ID.
+	 * @param string $role The user's role.
 	 */
 	public function vendor_application( $user_id, $role = '' ) {
 
@@ -249,7 +249,7 @@ class Emails {
 	 *
 	 * @param WP_User $user The user object.
 	 */
-	public function deny_application( $user ){
+	public function deny_application( $user ) {
 		$user_id = $user->ID;
 		WC()->mailer()->emails['VendorNotifyDenied']->trigger( $user_id );
 	}

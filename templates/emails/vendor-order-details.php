@@ -30,20 +30,20 @@ do_action( 'woocommerce_email_before_order_table', $order, $sent_to_admin, $plai
 
 <div style="margin-bottom: 40px;">
 	<table class="td" cellspacing="0" cellpadding="6"
-	       style="width: 100%; font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;" border="1">
+		   style="width: 100%; font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;" border="1">
 		<thead>
 		<tr>
 			<th class="td" scope="col"
-			    style="text-align:<?php echo esc_attr( $text_align ); ?>;"><?php esc_html_e( 'Product', 'wc-vendors' ); ?></th>
+				style="text-align:<?php echo esc_attr( $text_align ); ?>;"><?php esc_html_e( 'Product', 'wc-vendors' ); ?></th>
 			<th class="td" scope="col"
-			    style="text-align:<?php echo esc_attr( $text_align ); ?>;"><?php esc_html_e( 'Quantity', 'wc-vendors' ); ?></th>
+				style="text-align:<?php echo esc_attr( $text_align ); ?>;"><?php esc_html_e( 'Quantity', 'wc-vendors' ); ?></th>
 			<?php if ( 'both' === $totals_display || 'commission' === $totals_display ) : ?>
 				<th class="td" scope="col"
-				    style="text-align:<?php echo esc_attr( $text_align ); ?>;"><?php esc_html_e( 'Commission', 'wc-vendors' ); ?></th>
+					style="text-align:<?php echo esc_attr( $text_align ); ?>;"><?php esc_html_e( 'Commission', 'wc-vendors' ); ?></th>
 			<?php endif; ?>
 			<?php if ( 'both' === $totals_display || 'product' === $totals_display ) : ?>
 				<th class="td" scope="col"
-				    style="text-align:<?php echo esc_attr( $text_align ); ?>;"><?php esc_html_e( 'Price', 'wc-vendors' ); ?></th>
+					style="text-align:<?php echo esc_attr( $text_align ); ?>;"><?php esc_html_e( 'Price', 'wc-vendors' ); ?></th>
 			<?php endif; ?>
 
 		</tr>
@@ -52,16 +52,17 @@ do_action( 'woocommerce_email_before_order_table', $order, $sent_to_admin, $plai
 		<?php do_action( 'wcv_email_vendor_notify_order_before_order_items', $order, $sent_to_admin, $plain_text, $email ); ?>
 		<?php
 		echo wcv_get_vendor_order_items(
-			$order, array( // WPCS: XSS ok.
-			               'show_sku'       => $sent_to_vendor,
-			               'vendor_id'      => $vendor_id,
-			               'vendor_items'   => $vendor_items,
-			               'totals_display' => $totals_display,
-			               'show_image'     => false,
-			               'image_size'     => array( 32, 32 ),
-			               'plain_text'     => $plain_text,
-			               'sent_to_admin'  => $sent_to_admin,
-			               'sent_to_vendor' => $sent_to_vendor,
+			$order,
+			array( // WPCS: XSS ok.
+				'show_sku'       => $sent_to_vendor,
+				'vendor_id'      => $vendor_id,
+				'vendor_items'   => $vendor_items,
+				'totals_display' => $totals_display,
+				'show_image'     => false,
+				'image_size'     => array( 32, 32 ),
+				'plain_text'     => $plain_text,
+				'sent_to_admin'  => $sent_to_admin,
+				'sent_to_vendor' => $sent_to_vendor,
 			)
 		);
 		?>
@@ -80,9 +81,9 @@ do_action( 'woocommerce_email_before_order_table', $order, $sent_to_admin, $plai
 				?>
 				<tr>
 					<th class="td" scope="row"
-					    style="text-align:<?php echo esc_attr( $text_align ); ?>; <?php echo ( 1 === $i ) ? 'border-top-width: 4px;' : ''; ?>"><?php echo wp_kses_post( $total['label'] ); ?></th>
+						style="text-align:<?php echo esc_attr( $text_align ); ?>; <?php echo ( 1 === $i ) ? 'border-top-width: 4px;' : ''; ?>"><?php echo wp_kses_post( $total['label'] ); ?></th>
 					<td class="td" colspan="<?php echo $colspan; ?>"
-					    style="text-align:<?php echo esc_attr( $text_align ); ?>; <?php echo ( 1 === $i ) ? 'border-top-width: 4px;' : ''; ?>"><?php echo wp_kses_post( $total['value'] ); ?></td>
+						style="text-align:<?php echo esc_attr( $text_align ); ?>; <?php echo ( 1 === $i ) ? 'border-top-width: 4px;' : ''; ?>"><?php echo wp_kses_post( $total['value'] ); ?></td>
 				</tr>
 				<?php
 			}
@@ -94,9 +95,9 @@ do_action( 'woocommerce_email_before_order_table', $order, $sent_to_admin, $plai
 			?>
 			<tr>
 				<th class="td" scope="row" colspan="<?php echo $colspan; ?>"
-				    style="text-align:<?php echo esc_attr( $text_align ); ?>;"><?php esc_html_e( 'Note:', 'wc-vendors' ); ?></th>
+					style="text-align:<?php echo esc_attr( $text_align ); ?>;"><?php esc_html_e( 'Note:', 'wc-vendors' ); ?></th>
 				<td class="td"
-				    style="text-align:<?php echo esc_attr( $text_align ); ?>;"><?php echo wp_kses_post( wptexturize( $order->get_customer_note() ) ); ?></td>
+					style="text-align:<?php echo esc_attr( $text_align ); ?>;"><?php echo wp_kses_post( wptexturize( $order->get_customer_note() ) ); ?></td>
 			</tr>
 			<?php do_action( 'wcv_vendor_notify_order_after_customer_note', $order, $vendor_id, $email ); ?>
 			<?php

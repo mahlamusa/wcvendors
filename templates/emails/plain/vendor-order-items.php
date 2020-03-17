@@ -27,7 +27,8 @@ foreach ( $items as $item_id => $item ) :
 		do_action( 'woocommerce_order_item_meta_start', $item_id, $item, $order, $plain_text );
 		echo strip_tags(
 			wc_display_item_meta(
-				$item, array(
+				$item,
+				array(
 					'before'    => "\n- ",
 					'separator' => "\n- ",
 					'after'     => '',

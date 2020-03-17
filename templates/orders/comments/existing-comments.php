@@ -1,7 +1,7 @@
 <?php
 
 foreach ( $comments as $comment ) :
-	$last_added = human_time_diff( strtotime( $comment->comment_date_gmt ), current_time( 'timestamp', 1 ) );
+	$last_added = human_time_diff( strtotime( $comment->comment_date_gmt ), time() );
 
 	?>
 
