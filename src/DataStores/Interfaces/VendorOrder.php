@@ -1,4 +1,14 @@
 <?php
+/**
+ * Vendor Order Data Store Interface
+ *
+ * Functions that must be defined by vendor order classes.
+ *
+ * @package    WCVendors
+ * @subpackage Interface
+ * @version    3.0.0
+ * @since      3.0.0
+ */
 
 namespace WCVendors\DataStores\Interfaces;
 
@@ -11,9 +21,8 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * Functions that must be defined by vendor order classes.
  *
- * @category Interface
- * @since    2.0.0
- * @package  WCVendors
+ * @version 3.0.0
+ * @since   3.0.0
  */
 interface VendorOrder {
 

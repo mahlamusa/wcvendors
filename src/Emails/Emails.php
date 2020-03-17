@@ -100,7 +100,7 @@ class Emails {
 		if ( wcv_is_vendor( $post->post_author ) ) {
 			$vendor_data  = get_userdata( $post->post_author );
 			$vendor_email = trim( $vendor_data->user_email );
-			$emails       .= ',' . $vendor_email;
+			$emails      .= ',' . $vendor_email;
 		}
 
 		return $emails;
@@ -147,13 +147,14 @@ class Emails {
 	 *
 	 * @param array                         $emails The registered emails.
 	 * @param WC_Product The product object.
-	 * @return void.
+	 * @return array.
 	 */
-	public function vendor_backorder_stock_email( $emails, $product ) {
+	public function vendor_backorder_stock_email( $emails, $product ) { // phpcs:ignore WordPressVIPMinimum.Hooks.AlwaysReturnInFilter.VoidReturn
 		if ( 'no' === get_option( 'wcvendors_notify_backorder_stock', 'yes' ) ) {
 			return;
 		}
 		$this->vendor_stock_email( $emails, $product );
+		return $emails;
 	}
 
 
@@ -167,6 +168,7 @@ class Emails {
 	 * @return array
 	 */
 	public function order_actions( $order_actions ) {
+		// translators:
 		$order_actions['send_vendor_new_order'] = sprintf( __( 'Resend %s new order notification', 'wc-vendors' ), wcv_get_vendor_name( true, false ) );
 
 		return $order_actions;
@@ -224,16 +226,16 @@ class Emails {
 		/**
 		 * If the role is not given, set it according to the vendor approval option in admin
 		 */
-		if ( $role == '' ) {
+		if ( '' === $role ) {
 			$manual = wc_string_to_bool( get_option( 'wcvendors_vendor_approve_registration', 'no' ) );
 			$role   = apply_filters( 'wcvendors_pending_role', ( $manual ? 'pending_vendor' : 'vendor' ) );
 		}
 
-		if ( $role == 'pending_vendor' ) {
+		if ( 'pending_vendor' === $role ) {
 			$status = __( 'pending', 'wc-vendors' );
 			WC()->mailer()->emails['VendorNotifyApplication']->trigger( $user_id, $status );
 			WC()->mailer()->emails['AdminNotifyApplication']->trigger( $user_id, $status );
-		} elseif ( $role == 'vendor' ) {
+		} elseif ( 'vendor' === $role ) {
 			$status = __( 'approved', 'wc-vendors' );
 			WC()->mailer()->emails['VendorNotifyApproved']->trigger( $user_id, $status );
 			WC()->mailer()->emails['AdminNotifyApproved']->trigger( $user_id, $status );

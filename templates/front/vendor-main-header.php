@@ -4,7 +4,6 @@
  *
  *  THIS FILE WILL LOAD ON VENDORS STORE URLs (such as yourdomain.com/vendors/bobs-store/)
  *
- * @author WCVendors
  * @package WCVendors
  * @version 1.3.0
  */

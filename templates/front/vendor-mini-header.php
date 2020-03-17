@@ -4,7 +4,6 @@
  *
  *  THIS FILE WILL LOAD ON VENDORS INDIVIDUAL PRODUCT URLs (such as yourdomain.com/shop/product-name/)
  *
- * @author WCVendors
  * @package WCVendors
  * @version 1.3.0
  */

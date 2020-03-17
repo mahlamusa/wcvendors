@@ -89,14 +89,14 @@ function wcv_get_date_from_gmt( $string, $format = 'Y-m-d H:i:s', $timezone_stri
 		$datetime = date_create( $string, new DateTimeZone( 'UTC' ) );
 
 		if ( ! $datetime ) {
-			return date( $format, 0 );
+			return gmdate( $format, 0 );
 		}
 
 		$datetime->setTimezone( new DateTimeZone( $tz ) );
 		$string_localtime = $datetime->format( $format );
 	} else {
 		if ( ! preg_match( '#([0-9]{1,4})-([0-9]{1,2})-([0-9]{1,2}) ([0-9]{1,2}):([0-9]{1,2}):([0-9]{1,2})#', $string, $matches ) ) {
-			return date( $format, 0 );
+			return gmdate( $format, 0 );
 		}
 
 		$string_time      = gmmktime( $matches[4], $matches[5], $matches[6], $matches[2], $matches[3], $matches[1] );

@@ -1,4 +1,15 @@
 <?php
+/**
+ * Commission list Class.
+ *
+ * A class that generates the commission list.
+ *
+ * @package     WCVendors
+ * @subpackage  Admin
+ * 
+ * @version 3.0.0
+ * @since   2.0.0
+ */
 
 namespace WCVendors\Admin;
 
@@ -15,10 +26,8 @@ if ( ! class_exists( 'WP_List_Table' ) ) {
  *
  * A class that generates the commission list.
  *
- * @author      Jamie Madden, WC Vendors
- * @category    Admin
- * @package     WCVendors/Admin
- * @version     2.0.0
+ * @version 3.0.0
+ * @since   2.0.0
  */
 class CommissionTable extends \WP_List_Table {
 
@@ -28,9 +37,8 @@ class CommissionTable extends \WP_List_Table {
 	/**
 	 * Constructor
 	 *
-	 * @access public
-	 * @since 2.0.0
-	 * @version 2.0.0
+	 * @since   2.0.0
+	 * @version 3.0.0
 	 */
 	public function __construct() {
 
@@ -47,7 +55,6 @@ class CommissionTable extends \WP_List_Table {
 	/**
 	 * Prepares the items for display
 	 *
-	 * @access public
 	 * @since 1.0.0
 	 * @version 1.0.0
 	 * @return bool
@@ -136,9 +143,8 @@ class CommissionTable extends \WP_List_Table {
 	/**
 	 * Adds additional views
 	 *
-	 * @access public
-	 * @since 1.0.0
-	 * @version 1.0.0
+	 * @since   1.0.0
+	 * @version 3.0.0
 	 * @param mixed $views
 	 * @return bool
 	 */
@@ -156,9 +162,8 @@ class CommissionTable extends \WP_List_Table {
 	/**
 	 * Adds filters to the table
 	 *
-	 * @access public
 	 * @since 1.0.0
-	 * @version 1.0.0
+	 * @version 3.0.0
 	 * @param string $position whether top/bottom
 	 * @return bool
 	 */
@@ -215,7 +220,6 @@ class CommissionTable extends \WP_List_Table {
 	/**
 	 * Displays the months filter
 	 *
-	 * @access public
 	 * @since 1.0.0
 	 * @version 1.0.0
 	 * @return bool
@@ -272,7 +276,6 @@ class CommissionTable extends \WP_List_Table {
 	/**
 	 * Displays the commission status dropdown filter
 	 *
-	 * @access public
 	 * @since 1.0.0
 	 * @version 1.0.0
 	 * @return bool
@@ -293,7 +296,6 @@ class CommissionTable extends \WP_List_Table {
 	/**
 	 * Displays the vendors dropdown filter
 	 *
-	 * @access public
 	 * @since 1.0.0
 	 * @version 1.0.0
 	 * @return bool
@@ -330,7 +332,6 @@ class CommissionTable extends \WP_List_Table {
 	/**
 	 * Defines the columns to show
 	 *
-	 * @access public
 	 * @since 1.0.0
 	 * @version 1.0.0
 	 * @return array $columns
@@ -353,7 +354,6 @@ class CommissionTable extends \WP_List_Table {
 	/**
 	 * Adds checkbox to each row
 	 *
-	 * @access public
 	 * @since 1.0.0
 	 * @version 1.0.0
 	 * @param object $item
@@ -366,7 +366,6 @@ class CommissionTable extends \WP_List_Table {
 	/**
 	 * Defines what data to show on each column
 	 *
-	 * @access public
 	 * @since 1.0.0
 	 * @version 1.0.0
 	 * @param array  $item
@@ -502,7 +501,6 @@ class CommissionTable extends \WP_List_Table {
 	/**
 	 * Defines the hidden columns
 	 *
-	 * @access public
 	 * @since 1.0.0
 	 * @version 1.0.0
 	 * @return array $columns
@@ -525,7 +523,6 @@ class CommissionTable extends \WP_List_Table {
 	/**
 	 * Returns the columns that need sorting
 	 *
-	 * @access public
 	 * @since 1.0.0
 	 * @version 1.0.0
 	 * @return array $sort
@@ -543,7 +540,6 @@ class CommissionTable extends \WP_List_Table {
 	/**
 	 * Display custom no items found text
 	 *
-	 * @access public
 	 * @since 1.0.0
 	 * @version 1.0.0
 	 * @return bool
@@ -557,7 +553,6 @@ class CommissionTable extends \WP_List_Table {
 	/**
 	 * Add bulk actions
 	 *
-	 * @access public
 	 * @since 1.0.0
 	 * @version 1.0.0
 	 * @return bool
@@ -653,7 +648,6 @@ class CommissionTable extends \WP_List_Table {
 	// /**
 	// * Set shipping status of an order item
 	// *
-	// * @access public
 	// * @since 1.0.0
 	// * @version 1.0.0
 	// * @param int $order_item_id

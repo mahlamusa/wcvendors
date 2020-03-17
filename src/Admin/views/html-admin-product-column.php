@@ -2,9 +2,9 @@
 /**
  * Output the hidden fields required for quick edit
  *
- * @author   Jamie Madden, WC Vendors
- * @version  2.0.0
- * @category Class
+ * @version  3.0.0
+ * @since    3.0.0
+ * @subpackage Admin/Views
  */
 ?>
 <div class="hidden" id="wcvendors_inline_<?php echo absint( $post_id ); ?>">

@@ -4,7 +4,6 @@
  *
  * This template can be overridden by copying it to yourtheme/woocommerce/emails/plain/vendor-notify-order.php.
  *
- * @author         Jamie Madden, WC Vendors
  * @package        WCvendors/Templates/Emails/Plain
  * @version        2.0.0
  */

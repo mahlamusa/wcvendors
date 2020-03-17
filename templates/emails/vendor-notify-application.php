@@ -4,8 +4,7 @@
  *
  * This template can be overridden by copying it to yourtheme/woocommerce/emails/vendor-notify-application.php
  *
- * @author  WC Vendors
- * @package WCVendors/Templates/Emails
+ * @@package WCVendors/Templates/Emails
  * @version 2.0.0
  * @since   1.0.13
  */

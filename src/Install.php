@@ -18,7 +18,13 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class Install {
 
-	/** @var object Background update class */
+	/**
+	 * Background updater.
+	 *
+	 * @var object Background update class.
+	 * @version 3.0.0
+	 * @since   3.0.0
+	 */
 	private $background_updater;
 
 	/** Updates to be run **/
@@ -50,7 +56,7 @@ class Install {
 	/**
 	 * Install WC Vendors
 	 */
-	public function install() {
+	public function __construct() {
 
 		if ( ! defined( 'WCV_INSTALLING' ) ) {
 			define( 'WCV_INSTALLING', true );
@@ -182,11 +188,11 @@ class Install {
 		}
 
 		if ( ! isset( $wp_roles ) ) {
-			$wp_roles = new WP_Roles();
+			$wp_roles = new WP_Roles(); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 		}
 
-		// Pending Vendor
-		add_role(
+		// Pending Vendor.
+		add_role( // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.custom_role_add_role
 			'pending_vendor',
 			__( 'Pending Vendor', 'wc-vendors' ),
 			array(
@@ -196,8 +202,8 @@ class Install {
 			)
 		);
 
-		// Vendor
-		add_role(
+		// Vendor.
+		add_role( // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.custom_role_add_role
 			'vendor',
 			__( 'Vendor', 'wc-vendors' ),
 			array(
@@ -293,7 +299,7 @@ class Install {
 	}
 
 	/**
-	 * wcvendors_remove_roles function.
+	 * Wcvendors_remove_roles function.
 	 */
 	public function remove_roles() {
 		remove_role( 'pending_vendor' );
@@ -324,7 +330,7 @@ class Install {
 	 * @return  array
 	 */
 	public function plugin_row_meta( $links, $file ) {
-		if ( WCV_PLUGIN_BASENAME == $file ) {
+		if ( WCV_PLUGIN_BASENAME === $file ) {
 			$row_meta = array(
 				'docs'         => '<a href="' . esc_url( apply_filters( 'wcvendors_docs_url', 'https://docs.wc-vendors.com/' ) ) . '" aria-label="' . esc_attr__( 'View WC Vendors documentation', 'wc-vendors' ) . '">' . esc_html__( 'Docs', 'wc-vendors' ) . '</a>',
 				'free-support' => '<a href="' . esc_url( apply_filters( 'wcvendors_free_support_url', 'https://wordpress.org/plugins/wc-vendors' ) ) . '" aria-label="' . esc_attr__( 'Visit community forums', 'wc-vendors' ) . '">' . esc_html__( 'Free support', 'wc-vendors' ) . '</a>',

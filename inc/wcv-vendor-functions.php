@@ -123,7 +123,8 @@ function wcv_get_vendor_display_name( $vendor_id ) {
 function wcv_get_vendor_shop_name( $vendor_id ) {
 
 	$name      = $vendor_id ? get_user_meta( $vendor_id, 'pv_shop_name', true ) : false;
-	$shop_name = ( ! $name && $vendor = get_userdata( $vendor_id ) ) ? $vendor->user_login : $name;
+	$vendor    = get_userdata( $vendor_id );
+	$shop_name = ( ! $name && $vendor ) ? $vendor->user_login : $name;
 
 	return $shop_name;
 }

@@ -4,7 +4,6 @@
  *
  * This template can be overridden by copying it to yourtheme/woocommerce/emails/admin-notify-application.php.
  *
- * @author        Jamie Madden, WC Vendors
  * @package       WCVendors/Templates/Emails/HTML
  * @version       2.1.7
  */

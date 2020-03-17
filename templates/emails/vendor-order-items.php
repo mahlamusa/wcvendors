@@ -4,7 +4,6 @@
  *
  * This template can be overridden by copying it to yourtheme/woocommerce/emails/vendor-order-items.php.
  *
- * @author  Jamie Madden, WC Vendors
  * @package WCVendors/Templates/Emails
  * @version 2.0.0
  */

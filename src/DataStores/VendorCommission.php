@@ -1,4 +1,14 @@
 <?php
+/**
+ * Commission Item Data Store.
+ *
+ * @package    WCVendors
+ * @subpackage Data-Stores
+ *
+ * @version 3.0.0
+ * @since   3.0.0
+ */
+
 namespace WCVendors\DataStores;
 
 use WC_Data_Store_WP;
@@ -11,10 +21,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Commission Item Data Store.
  *
- * @author      Jamie Madden, WC Vendors
- * @category    Data-Stores
- * @package     WCVendors/Data-Stores
- * @version     2.0.0
+ * @version 3.0.0
+ * @since   3.0.0
  *
  * Schema
  *
@@ -88,13 +96,15 @@ class VendorCommission extends WC_Data_Store_WP implements Interfaces\VendorComm
 	public function read( &$commission ) {
 		global $wpdb;
 
-		if ( $commission_data = $wbdp->get_row(
+		$commission_data = $wbdp->get_row(
 			$wpdb->prepare(
 				"SELECT 'order_id ', 'vendor_id ', 'vendor_name', 'vendor_order_id', 'product_id', 'variation_id', 'order_item_id', 'product_qty', 'total_shipping', 'shipping_tax', 'tax', 'fees', 'total_due', 'status', 'commission_date', 'commission_rate', 'commission_fee', 'paid_date ', 'paid_status', 'paid_via ',
-			FROM {$wpdb->prefix}wcvendors_commissions WHERE commission_id = %d LIMIT 1",
+				FROM {$wpdb->prefix}wcvendors_commissions WHERE commission_id = %d LIMIT 1",
 				$commission->get_id()
 			)
-		) ) {
+		);
+
+		if ( $commission_data ) {
 
 			$commission->set_order_id( $commission_data->order_id );
 			$commission->set_vendor_id( $commission_data->vendor_id );
@@ -195,13 +205,15 @@ class VendorCommission extends WC_Data_Store_WP implements Interfaces\VendorComm
 		$commissions_data = array();
 		$commissions      = array();
 
-		$commission_sql = "SELECT `id`, `order_date`, `order_item_ids`, `vendor_order_id`, `vendor_id`, `vendor_name`, `commission`, `tax`, `fees`, `shipping`, `total_due`, `status`, `paid_date` FROM {$wpdb->prefix}wcvendors_commissions ";
-
-		if ( $status != '' ) {
-			$commission_sql  .= 'WHERE status = %s';
-			$commissions_data = $wpdb->get_results( $wpdb->prepare( $commission_sql, $status ) );
+		if ( '' !== $status ) {
+			$commissions_data = $wpdb->get_results(
+				$wpdb->prepare(
+					"SELECT `id`, `order_date`, `order_item_ids`, `vendor_order_id`, `vendor_id`, `vendor_name`, `commission`, `tax`, `fees`, `shipping`, `total_due`, `status`, `paid_date` FROM {$wpdb->prefix}wcvendors_commissions WHERE status = %s",
+					$status
+				)
+			);
 		} else {
-			$commissions_data = $wpdb->get_results( $commission_sql );
+			$commissions_data = $wpdb->get_results( "SELECT `id`, `order_date`, `order_item_ids`, `vendor_order_id`, `vendor_id`, `vendor_name`, `commission`, `tax`, `fees`, `shipping`, `total_due`, `status`, `paid_date` FROM {$wpdb->prefix}wcvendors_commissions" );
 		}
 
 		foreach ( $commissions_data as $commission_data ) {
@@ -239,13 +251,21 @@ class VendorCommission extends WC_Data_Store_WP implements Interfaces\VendorComm
 		$commissions_data   = array();
 		$vendor_commissions = array();
 
-		$commission_sql = "SELECT `id`, `order_date`, `order_item_ids`, `vendor_order_id`, `vendor_id`, `vendor_name`, `commission`, `tax`, `fees`, `shipping`, `total_due`, `status`, `paid_date` FROM {$wpdb->prefix}wcvendors_commissions WHERE vendor_id = %d ";
-
-		if ( $status != '' ) {
-			$commission_sql  .= 'AND status = %s';
-			$commissions_data = $wpdb->get_results( $wpdb->prepare( $commission_sql, $vendor_id, $status ) );
+		if ( '' != $status ) {
+			$commissions_data = $wpdb->get_results(
+				$wpdb->prepare(
+					"SELECT `id`, `order_date`, `order_item_ids`, `vendor_order_id`, `vendor_id`, `vendor_name`, `commission`, `tax`, `fees`, `shipping`, `total_due`, `status`, `paid_date` FROM {$wpdb->prefix}wcvendors_commissions WHERE vendor_id = %d AND status = %s",
+					$vendor_id,
+					$status
+				)
+			);
 		} else {
-			$commissions_data = $wpdb->get_results( $wpdb->prepare( $commission_sql, $vendor_id ) );
+			$commissions_data = $wpdb->get_results(
+				$wpdb->prepare(
+					"SELECT `id`, `order_date`, `order_item_ids`, `vendor_order_id`, `vendor_id`, `vendor_name`, `commission`, `tax`, `fees`, `shipping`, `total_due`, `status`, `paid_date` FROM {$wpdb->prefix}wcvendors_commissions WHERE vendor_id = %d",
+					$vendor_id
+				)
+			);
 		}
 
 		foreach ( $commissions_data as $commission_data ) {

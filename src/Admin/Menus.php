@@ -9,10 +9,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * The admin class handles all admin custom page functions for admin view
  *
- * @author      Jamie Madden, WC Vendors
- * @category    Admin
- * @package     WCVendors/Admin
- * @version     2.0.0
+ * @package    WCVendors
+ * @subpackage Admin
+ * @version    3.0.0
+ * @since      3.0.0
  */
 class Menus {
 

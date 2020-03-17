@@ -11,7 +11,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Vendor Order Data Store.
  *
- * @author      Jamie Madden, WC Vendors
  * @category    Data-Stores
  * @package     WCVendors/Data-Stores
  * @version     2.0.0

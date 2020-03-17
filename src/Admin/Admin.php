@@ -1,4 +1,12 @@
 <?php
+/**
+ * The admin class handles all related functions for admin view
+ *
+ * @package    WCVendors
+ * @subpackage Admin
+ * @version    3.0.0
+ * @since      2.0.0
+ */
 
 namespace WCVendors\Admin;
 
@@ -9,10 +17,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * The admin class handles all related functions for admin view
  *
- * @author      Jamie Madden, WC Vendors
- * @category    Admin
- * @package     WCVendors/Admin
- * @version     2.0.0
+ * @version 3.0.0
+ * @since   2.0.0
  */
 class Admin {
 

@@ -1,4 +1,11 @@
 <?php
+/**
+ * WCVendors Commission Data Store Interface.
+ *
+ * @package    WCVendors
+ * @subpackage Interfaces
+ * @version    3.0.0
+ */
 
 namespace WCVendors\DataStores\Interfaces;
 
@@ -11,10 +18,8 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * Functions that must be defined by commission classes.
  *
- * @author      Jamie Madden, WC Vendors
- * @category    Interfaces
- * @package     WCVendors/Interfaces
- * @version     2.0.0
+ * @version 2.0.0
+ * @since   3.0.0
  */
 interface VendorCommission {
 
