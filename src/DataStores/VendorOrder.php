@@ -1,4 +1,13 @@
 <?php
+/**
+ * Vendor Order Data Store.
+ *
+ * @package    WCVendors
+ * @subpackage Data-Stores
+ * @version    3.0.0
+ * @since      3.0.0
+ */
+
 namespace WCVendors\DataStores;
 
 use WC_Order_Data_Store_CPT;
@@ -11,9 +20,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Vendor Order Data Store.
  *
- * @category    Data-Stores
- * @package     WCVendors/Data-Stores
- * @version     2.0.0
+ * @version 3.0.0
+ * @since   3.0.0
  */
 class VendorOrder extends WC_Order_Data_Store_CPT implements Interfaces\VendorOrder, WC_Order_Data_Store_Interface {
 
@@ -104,7 +112,8 @@ class VendorOrder extends WC_Order_Data_Store_CPT implements Interfaces\VendorOr
 
 		$vendor_order->set_defaults();
 
-		if ( ! $vendor_order->get_id() || ! ( $post_object = get_post( $vendor_order->get_id() ) ) || $post_object->post_type !== 'shop_order_vendor' ) {
+		$post_object = get_post( $vendor_order->get_id() );
+		if ( ! $vendor_order->get_id() || ! $post_object || 'shop_order_vendor' !== $post_object->post_type ) {
 			throw new Exception( __( 'Invalid vendor order.', 'wc-vendors' ) );
 		}
 
@@ -127,6 +136,8 @@ class VendorOrder extends WC_Order_Data_Store_CPT implements Interfaces\VendorOr
 
 	/**
 	 * Update the order
+	 *
+	 * @param VendorOrder $vendor_order The vendor order.
 	 */
 	public function update( &$vendor_order ) {
 		parent::update( $vendor_order );
@@ -136,6 +147,12 @@ class VendorOrder extends WC_Order_Data_Store_CPT implements Interfaces\VendorOr
 	 * Delete the object this should only be called if the parent is deleted.
 	 *
 	 * @todo add check if parent is deleted then child orders are also deleted (if neeeded)
+	 *
+	 * @param VendorOrder $vendor_order The vendor order.
+	 * @param array $args Arguments to delete vendor order.
+	 * @return void
+	 * @version 3.0.0
+	 * @since   3.0.0
 	 */
 	public function delete( &$vendor_order, $args = array() ) {
 		parent::delete( $vendor_order, $args );

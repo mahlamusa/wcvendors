@@ -1,7 +1,10 @@
-<?php if ( function_exists( 'wc_print_notices' ) ) {
-	wc_print_notices(); } ?>
-
-<h2><?php printf( 'Orders for %s', wc_get_product( $product_id )->get_title() ); ?></h2>
+<?php
+if ( function_exists( 'wc_print_notices' ) ) {
+	wc_print_notices();
+}
+?>
+<?php // translators: %s The name of the product ?>
+<h2><?php echo esc_attr( sprintf( 'Orders for %s', wc_get_product( $product_id )->get_title() ) ); ?></h2>
 
 <?php do_action( 'wc_vendors_before_order_detail', $body ); ?>
 
@@ -9,14 +12,14 @@
 	<thead>
 	<tr>
 		<?php foreach ( $headers as $header ) : ?>
-			<th class="<?php echo sanitize_title( $header ); ?>"><?php echo $header; ?></th>
+			<th class="<?php echo esc_attr( sanitize_title( $header ) ); ?>"><?php echo esc_attr( $header ); ?></th>
 		<?php endforeach; ?>
 	</tr>
 	</thead>
 	<tbody>
 
 	<?php
-	foreach ( $body as $order_id => $order ) :
+	foreach ( $body as $order_id => $order ) : // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 
 		$order_items = ! empty( $items[ $order_id ]['items'] ) ? $items[ $order_id ]['items'] : array();
 		$count       = count( $order_items );
@@ -29,18 +32,18 @@
 			$first_index = array_shift( $order_keys );
 			$last_index  = end( $order_keys );
 			foreach ( $order as $detail_key => $detail ) :
-				if ( $detail_key == $last_index ) {
+				if ( $detail_key === $last_index ) {
 					continue;
 				}
 				?>
-				<?php if ( $detail_key == $first_index ) : ?>
+				<?php if ( $detail_key === $first_index ) : ?>
 
-					<td class="<?php echo $detail_key; ?>"
-						rowspan="<?php echo $count == 1 ? 3 : ( $count + 3 ); ?>"><?php echo $detail; ?></td>
+					<td class="<?php echo esc_attr( $detail_key ); ?>"
+						rowspan="<?php echo 1 ===  $count? 3 : esc_attr( $count + 3 ); ?>"><?php echo esc_attr( $detail ); ?></td>
 
 				<?php else : ?>
 
-					<td class="<?php echo $detail_key; ?>"><?php echo $detail; ?></td>
+					<td class="<?php echo esc_attr( $detail_key ); ?>"><?php echo esc_attr( $detail ); ?></td>
 
 				<?php endif; ?>
 			<?php endforeach; ?>
@@ -88,16 +91,17 @@
 
 				if ( $can_view_comments || $can_add_comments ) :
 
-					$comments = array();
+					$_comments = array();
 
 					if ( $can_view_comments ) {
-						$order    = new WC_Order( $order_id );
-						$comments = $order->get_customer_order_notes();
+						$_order    = new WC_Order( $order_id );
+						$_comments = $_order->get_customer_order_notes();
 					}
 					?>
 				<a href="#" class="order-comments-link">
 					<p>
-						<?php printf( __( 'Comments (%s)', 'wcvendors' ), count( $comments ) ); ?>
+						<?php // translators: %s The number of comments ?>
+						<?php echo esc_attr( sprintf( __( 'Comments (%s)', 'wcvendors' ), count( $_comments ) ) ); ?>
 					</p>
 				</a>
 
@@ -106,11 +110,11 @@
 
 					endif;
 
-				if ( $can_view_comments && ! empty( $comments ) ) {
+				if ( $can_view_comments && ! empty( $_comments ) ) {
 					wc_get_template(
 						'existing-comments.php',
 						array(
-							'comments' => $comments,
+							'comments' => $_comments,
 						),
 						'wc-vendors/orders/comments/',
 						wcv_plugin_dir . 'templates/orders/comments/'
@@ -138,7 +142,7 @@
 
 						<a href="#" class="order-tracking-link">
 							<p>
-								<?php _e( 'Shipping', 'wcvendors' ); ?>
+								<?php esc_attr_e( 'Shipping', 'wcvendors' ); ?>
 							</p>
 						</a>
 

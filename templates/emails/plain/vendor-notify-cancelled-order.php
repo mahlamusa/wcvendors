@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-echo '= ' . $email_heading . " =\n\n";
+echo '= ' . esc_attr( $email_heading ) . " =\n\n";
 
 echo __( 'Your order has been cancelled.', 'wc-vendors' ) . "\n\n"; // WPCS: XSS ok.
 
@@ -27,4 +27,4 @@ do_action( 'wcvendors_email_customer_details', $order, $sent_to_admin, $plain_te
 
 echo "\n=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n\n";
 
-echo apply_filters( 'woocommerce_email_footer_text', get_option( 'woocommerce_email_footer_text' ) );
+echo esc_attr( apply_filters( 'woocommerce_email_footer_text', get_option( 'woocommerce_email_footer_text' ) ) );

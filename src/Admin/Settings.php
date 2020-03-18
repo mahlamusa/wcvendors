@@ -71,8 +71,8 @@ class Settings extends WC_Admin_Settings {
 	public static function save() {
 		global $current_tab;
 
-		if ( empty( $_REQUEST['_wpnonce'] ) || ! wp_verify_nonce( $_REQUEST['_wpnonce'], 'wcvendors-settings' ) ) {
-			die( __( 'Action failed. Please refresh the page and retry.', 'wc-vendors' ) );
+		if ( empty( $_REQUEST['_wpnonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['_wpnonce'] ) ), 'wcvendors-settings' ) ) {
+			die( esc_attr( __( 'Action failed. Please refresh the page and retry.', 'wc-vendors' ) ) );
 		}
 
 		// Trigger actions
@@ -184,7 +184,7 @@ class Settings extends WC_Admin_Settings {
 						echo '<h2>' . esc_html( $value['title'] ) . '</h2>';
 					}
 					if ( ! empty( $value['desc'] ) ) {
-						echo wpautop( wptexturize( wp_kses_post( $value['desc'] ) ) );
+						echo wp_kses_post( wpautop( wptexturize( wp_kses_post( $value['desc'] ) ) ) );
 					}
 					echo '<table class="form-table">' . "\n\n";
 					if ( ! empty( $value['id'] ) ) {
@@ -213,9 +213,9 @@ class Settings extends WC_Admin_Settings {
 					?><tr valign="top">
 						<th scope="row" class="titledesc">
 							<label for="<?php echo esc_attr( $value['id'] ); ?>"><?php echo esc_html( $value['title'] ); ?></label>
-							<?php echo $tooltip_html; ?>
+							<?php echo wp_kses_post( $tooltip_html ); ?>
 						</th>
-						<td class="forminp forminp-<?php echo sanitize_title( $value['type'] ); ?>">
+						<td class="forminp forminp-<?php echo esc_attr( sanitize_title( $value['type'] ) ); ?>">
 							<input
 								name="<?php echo esc_attr( $value['id'] ); ?>"
 								id="<?php echo esc_attr( $value['id'] ); ?>"
@@ -224,8 +224,8 @@ class Settings extends WC_Admin_Settings {
 								value="<?php echo esc_attr( $option_value ); ?>"
 								class="<?php echo esc_attr( $value['class'] ); ?>"
 								placeholder="<?php echo esc_attr( $value['placeholder'] ); ?>"
-								<?php echo implode( ' ', $custom_attributes ); ?>
-								/><?php echo esc_html( $value['suffix'] ); ?> <?php echo $description; ?>
+								<?php echo esc_attr( implode( ' ', $custom_attributes ) ); ?>
+								/><?php echo esc_html( $value['suffix'] ); ?> <?php echo wp_kses_post( $description ); ?>
 						</td>
 					</tr>
 					<?php
@@ -239,9 +239,9 @@ class Settings extends WC_Admin_Settings {
 					<tr valign="top">
 						<th scope="row" class="titledesc">
 							<label for="<?php echo esc_attr( $value['id'] ); ?>"><?php echo esc_html( $value['title'] ); ?></label>
-							<?php echo $tooltip_html; ?>
+							<?php echo wp_kses_post( $tooltip_html ); ?>
 						</th>
-						<td class="forminp forminp-<?php echo sanitize_title( $value['type'] ); ?>">&lrm;
+						<td class="forminp forminp-<?php echo esc_attr( sanitize_title( $value['type'] ) ); ?>">&lrm;
 							<span class="colorpickpreview" style="background: <?php echo esc_attr( $option_value ); ?>"></span>
 							<input
 								name="<?php echo esc_attr( $value['id'] ); ?>"
@@ -252,8 +252,8 @@ class Settings extends WC_Admin_Settings {
 								value="<?php echo esc_attr( $option_value ); ?>"
 								class="<?php echo esc_attr( $value['class'] ); ?>colorpick"
 								placeholder="<?php echo esc_attr( $value['placeholder'] ); ?>"
-								<?php echo implode( ' ', $custom_attributes ); ?>
-								/>&lrm; <?php echo $description; ?>
+								<?php echo esc_attr( implode( ' ', $custom_attributes ) ); ?>
+								/>&lrm; <?php echo wp_kses_post( $description ); ?>
 								<div id="colorPickerDiv_<?php echo esc_attr( $value['id'] ); ?>" class="colorpickdiv" style="z-index: 100;background:#eee;border:1px solid #ccc;position:absolute;display:none;"></div>
 						</td>
 					</tr>
@@ -268,10 +268,10 @@ class Settings extends WC_Admin_Settings {
 					<tr valign="top">
 						<th scope="row" class="titledesc">
 							<label for="<?php echo esc_attr( $value['id'] ); ?>"><?php echo esc_html( $value['title'] ); ?></label>
-							<?php echo $tooltip_html; ?>
+							<?php echo esc_attr( $tooltip_html ); ?>
 						</th>
-						<td class="forminp forminp-<?php echo sanitize_title( $value['type'] ); ?>">
-							<?php echo $description; ?>
+						<td class="forminp forminp-<?php echo esc_attr( sanitize_title( $value['type'] ) ); ?>">
+							<?php echo esc_attr( $description ); ?>
 
 							<textarea
 								name="<?php echo esc_attr( $value['id'] ); ?>"
@@ -279,7 +279,7 @@ class Settings extends WC_Admin_Settings {
 								style="<?php echo esc_attr( $value['css'] ); ?>"
 								class="<?php echo esc_attr( $value['class'] ); ?>"
 								placeholder="<?php echo esc_attr( $value['placeholder'] ); ?>"
-								<?php echo implode( ' ', $custom_attributes ); ?>
+								<?php echo esc_attr( implode( ' ', $custom_attributes ) ); ?>
 								><?php echo esc_textarea( $option_value ); ?></textarea>
 						</td>
 					</tr>
@@ -295,16 +295,16 @@ class Settings extends WC_Admin_Settings {
 					<tr valign="top">
 						<th scope="row" class="titledesc">
 							<label for="<?php echo esc_attr( $value['id'] ); ?>"><?php echo esc_html( $value['title'] ); ?></label>
-							<?php echo $tooltip_html; ?>
+							<?php echo esc_attr( $tooltip_html ); ?>
 						</th>
-						<td class="forminp forminp-<?php echo sanitize_title( $value['type'] ); ?>">
+						<td class="forminp forminp-<?php echo esc_attr( sanitize_title( $value['type'] ) ); ?>">
 							<select
 								name="<?php echo esc_attr( $value['id'] ); ?><?php echo ( 'multiselect' === $value['type'] ) ? '[]' : ''; ?>"
 								id="<?php echo esc_attr( $value['id'] ); ?>"
 								style="<?php echo esc_attr( $value['css'] ); ?>"
 								class="<?php echo esc_attr( $value['class'] ); ?>"
-								<?php echo implode( ' ', $custom_attributes ); ?>
-								<?php echo ( 'multiselect' == $value['type'] ) ? 'multiple="multiple"' : ''; ?>
+								<?php echo esc_attr( implode( ' ', $custom_attributes ) ); ?>
+								<?php echo ( 'multiselect' === $value['type'] ) ? 'multiple="multiple"' : ''; ?>
 								>
 								<?php
 								foreach ( $value['options'] as $key => $val ) {
@@ -317,11 +317,11 @@ class Settings extends WC_Admin_Settings {
 												selected( $option_value, $key );
 											}
 											?>
-										><?php echo $val; ?></option>
+										><?php echo esc_attr( $val ); ?></option>
 										<?php
 								}
 								?>
-							</select> <?php echo $description; ?>
+							</select> <?php echo esc_attr( $description ); ?>
 						</td>
 					</tr>
 					<?php
@@ -335,11 +335,11 @@ class Settings extends WC_Admin_Settings {
 					<tr valign="top">
 						<th scope="row" class="titledesc">
 							<label for="<?php echo esc_attr( $value['id'] ); ?>"><?php echo esc_html( $value['title'] ); ?></label>
-							<?php echo $tooltip_html; ?>
+							<?php echo esc_attr( $tooltip_html ); ?>
 						</th>
-						<td class="forminp forminp-<?php echo sanitize_title( $value['type'] ); ?>">
+						<td class="forminp forminp-<?php echo esc_attr( sanitize_title( $value['type'] ) ); ?>">
 							<fieldset>
-								<?php echo $description; ?>
+								<?php echo esc_attr( $description ); ?>
 								<ul>
 								<?php
 								foreach ( $value['options'] as $key => $val ) {
@@ -347,13 +347,13 @@ class Settings extends WC_Admin_Settings {
 										<li>
 											<label><input
 												name="<?php echo esc_attr( $value['id'] ); ?>"
-												value="<?php echo $key; ?>"
+												value="<?php echo esc_attr( $key ); ?>"
 												type="radio"
 												style="<?php echo esc_attr( $value['css'] ); ?>"
 												class="<?php echo esc_attr( $value['class'] ); ?>"
-											<?php echo implode( ' ', $custom_attributes ); ?>
+											<?php echo esc_attr( implode( ' ', $custom_attributes ) ); ?>
 											<?php checked( $key, $option_value ); ?>
-												/> <?php echo $val; ?></label>
+												/> <?php echo esc_attr( $val ); ?></label>
 										</li>
 										<?php
 								}
@@ -376,17 +376,17 @@ class Settings extends WC_Admin_Settings {
 					if ( ! isset( $value['show_if_checked'] ) ) {
 						$value['show_if_checked'] = false;
 					}
-					if ( 'yes' == $value['hide_if_checked'] || 'yes' == $value['show_if_checked'] ) {
+					if ( 'yes' === $value['hide_if_checked'] || 'yes' === $value['show_if_checked'] ) {
 						$visibility_class[] = 'hidden_option';
 					}
-					if ( 'option' == $value['hide_if_checked'] ) {
+					if ( 'option' === $value['hide_if_checked'] ) {
 						$visibility_class[] = 'hide_options_if_checked';
 					}
-					if ( 'option' == $value['show_if_checked'] ) {
+					if ( 'option' === $value['show_if_checked'] ) {
 						$visibility_class[] = 'show_options_if_checked';
 					}
 
-					if ( ! isset( $value['checkboxgroup'] ) || 'start' == $value['checkboxgroup'] ) {
+					if ( ! isset( $value['checkboxgroup'] ) || 'start' === $value['checkboxgroup'] ) {
 						?>
 							<tr valign="top" class="<?php echo esc_attr( implode( ' ', $visibility_class ) ); ?>">
 								<th scope="row" class="titledesc"><?php echo esc_html( $value['title'] ); ?></th>
@@ -406,7 +406,7 @@ class Settings extends WC_Admin_Settings {
 					}
 
 					?>
-						<label for="<?php echo $value['id']; ?>">
+						<label for="<?php echo esc_attr( $value['id'] ); ?>">
 							<input
 								name="<?php echo esc_attr( $value['id'] ); ?>"
 								id="<?php echo esc_attr( $value['id'] ); ?>"
@@ -414,12 +414,12 @@ class Settings extends WC_Admin_Settings {
 								class="<?php echo esc_attr( isset( $value['class'] ) ? $value['class'] : '' ); ?>"
 								value="1"
 								<?php checked( $option_value, 'yes' ); ?>
-								<?php echo implode( ' ', $custom_attributes ); ?>
-							/> <?php echo $description; ?>
-						</label> <?php echo $tooltip_html; ?>
+								<?php echo esc_attr( implode( ' ', $custom_attributes ) ); ?>
+							/> <?php echo esc_attr( $description ); ?>
+						</label> <?php echo esc_attr( $tooltip_html ); ?>
 					<?php
 
-					if ( ! isset( $value['checkboxgroup'] ) || 'end' == $value['checkboxgroup'] ) {
+					if ( ! isset( $value['checkboxgroup'] ) || 'end' === $value['checkboxgroup'] ) {
 						?>
 									</fieldset>
 								</td>
@@ -451,9 +451,9 @@ class Settings extends WC_Admin_Settings {
 
 					?>
 					<tr valign="top" class="single_select_page">
-						<th scope="row" class="titledesc"><?php echo esc_html( $value['title'] ); ?> <?php echo $tooltip_html; ?></th>
+						<th scope="row" class="titledesc"><?php echo esc_html( $value['title'] ); ?> <?php echo esc_attr( $tooltip_html ); ?></th>
 						<td class="forminp">
-							<?php echo str_replace( ' id=', " data-placeholder='" . esc_attr__( 'Select a page&hellip;', 'wc-vendors' ) . "' style='" . $value['css'] . "' class='" . $value['class'] . "' id=", wp_dropdown_pages( $args ) ); ?> <?php echo $description; ?>
+							<?php echo str_replace( ' id=', " data-placeholder='" . esc_attr__( 'Select a page&hellip;', 'wc-vendors' ) . "' style='" . esc_attr( $value['css'] ) . "' class='" . esc_attr( $value['class'] ) . "' id=", wp_dropdown_pages( $args ) ); ?> <?php echo esc_attr( $description ); ?>
 						</td>
 					</tr>
 					<?php
@@ -475,11 +475,11 @@ class Settings extends WC_Admin_Settings {
 					<tr valign="top">
 						<th scope="row" class="titledesc">
 							<label for="<?php echo esc_attr( $value['id'] ); ?>"><?php echo esc_html( $value['title'] ); ?></label>
-							<?php echo $tooltip_html; ?>
+							<?php echo esc_attr( $tooltip_html ); ?>
 						</th>
 						<td class="forminp"><select name="<?php echo esc_attr( $value['id'] ); ?>" style="<?php echo esc_attr( $value['css'] ); ?>" data-placeholder="<?php esc_attr_e( 'Choose a country&hellip;', 'wc-vendors' ); ?>" aria-label="<?php esc_attr_e( 'Country', 'wc-vendors' ); ?>" class="wc-enhanced-select">
 							<?php WC()->countries->country_dropdown_options( $country, $state ); ?>
-						</select> <?php echo $description; ?>
+						</select> <?php echo esc_attr( $description ); ?>
 						</td>
 					</tr>
 					<?php
@@ -500,18 +500,18 @@ class Settings extends WC_Admin_Settings {
 					<tr valign="top">
 						<th scope="row" class="titledesc">
 							<label for="<?php echo esc_attr( $value['id'] ); ?>"><?php echo esc_html( $value['title'] ); ?></label>
-							<?php echo $tooltip_html; ?>
+							<?php echo esc_attr( $tooltip_html ); ?>
 						</th>
 						<td class="forminp">
 							<select multiple="multiple" name="<?php echo esc_attr( $value['id'] ); ?>[]" style="width:350px" data-placeholder="<?php esc_attr_e( 'Choose countries&hellip;', 'wc-vendors' ); ?>" aria-label="<?php esc_attr_e( 'Country', 'wc-vendors' ); ?>" class="wc-enhanced-select">
 								<?php
 								if ( ! empty( $countries ) ) {
 									foreach ( $countries as $key => $val ) {
-										echo '<option value="' . esc_attr( $key ) . '" ' . selected( in_array( $key, $selections ), true, false ) . '>' . $val . '</option>';
+										echo '<option value="' . esc_attr( $key ) . '" ' . selected( in_array( $key, $selections ), true, false ) . '>' . esc_attr( $val ) . '</option>';
 									}
 								}
 								?>
-							</select> <?php echo ( $description ) ? $description : ''; ?> <br /><a class="select_all button" href="#"><?php _e( 'Select all', 'wc-vendors' ); ?></a> <a class="select_none button" href="#"><?php _e( 'Select none', 'wc-vendors' ); ?></a>
+							</select> <?php echo ( $description ) ? wp_kses_post( $description ) : ''; ?> <br /><a class="select_all button" href="#"><?php esc_attr_e( 'Select all', 'wc-vendors' ); ?></a> <a class="select_none button" href="#"><?php esc_attr_e( 'Select none', 'wc-vendors' ); ?></a>
 						</td>
 					</tr>
 					<?php
@@ -537,7 +537,7 @@ class Settings extends WC_Admin_Settings {
 	 */
 	public static function save_fields( $options, $data = null ) {
 		if ( is_null( $data ) ) {
-			$data = $_POST;
+			$data = isset( $_POST ) ? wp_unslash( $_POST ) : array();
 		}
 		if ( empty( $data ) ) {
 			return false;

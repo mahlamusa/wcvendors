@@ -25,7 +25,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 ?>
 
-<h1><?php echo $shop_name; ?></h1>
+<h1><?php echo esc_attr( $shop_name ); ?></h1>
 <div class="wcv_shop_description">
-<?php echo $shop_description; ?>
+<?php echo wp_kses_post( $shop_description ); ?>
 </div>

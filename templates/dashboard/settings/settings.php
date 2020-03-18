@@ -1,4 +1,4 @@
-<h2><?php _e( 'Settings', 'wcvendors' ); ?></h2>
+<h2><?php esc_attr_e( 'Settings', 'wcvendors' ); ?></h2>
 
 <?php
 if ( function_exists( 'wc_print_notices' ) ) {
@@ -10,7 +10,7 @@ if ( function_exists( 'wc_print_notices' ) ) {
 
 	do_action( 'wcvendors_settings_before_paypal' );
 
-	if ( $paypal_address !== 'false' ) {
+	if ( false !== $paypal_address ) {
 		wc_get_template(
 			'paypal-email-form.php',
 			array(
@@ -47,7 +47,7 @@ if ( function_exists( 'wc_print_notices' ) ) {
 
 	do_action( 'wcvendors_settings_after_seller_info' );
 
-	if ( $shop_description !== 'false' ) {
+	if ( false !== $shop_description ) {
 		wc_get_template(
 			'shop-description.php',
 			array(
@@ -67,5 +67,5 @@ if ( function_exists( 'wc_print_notices' ) ) {
 
 	<?php wp_nonce_field( 'save-shop-settings', 'wc-product-vendor-nonce' ); ?>
 	<input type="submit" class="btn btn-inverse btn-small" style="float:none;" name="vendor_application_submit"
-		   value="<?php _e( 'Save', 'wcvendors' ); ?>"/>
+		   value="<?php esc_attr_e( 'Save', 'wcvendors' ); ?>"/>
 </form>

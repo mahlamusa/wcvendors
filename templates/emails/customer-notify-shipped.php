@@ -13,15 +13,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * @hooked WC_Emails::email_header() Output the email header
+ * Output the email header
+ *
+ * @hooked WC_Emails::email_header()
  */
 do_action( 'woocommerce_email_header', $email_heading, $email );
 
 ?>
-	<p><?php printf( __( '%1$s has marked your order #%2$s as shipped. The items that are shipped are as follows', 'wc-vendors' ), wcv_get_vendor_shop_name( $vendor_id ), $order->get_id() ); ?></p>
+	<?php // translators: %s1$ Name used to refer to vendor, %2$s The order number ?>
+	<p><?php echo esc_attr( sprintf( __( '%1$s has marked your order #%2$s as shipped. The items that are shipped are as follows', 'wc-vendors' ), wcv_get_vendor_shop_name( $vendor_id ), $order->get_id() ) ); ?></p>
 <?php
 
 /**
+ * Show order details
+ *
  * @hooked WC_Emails::order_details() Shows the order details table.
  * @hooked WC_Structured_Data::generate_order_data() Generates structured data.
  * @hooked WC_Structured_Data::output_structured_data() Outputs structured data.
@@ -30,17 +35,23 @@ do_action( 'woocommerce_email_header', $email_heading, $email );
 do_action( 'woocommerce_email_order_details', $order, $sent_to_admin, $plain_text, $email );
 
 /**
+ * Show order meta
+ *
  * @hooked WC_Emails::order_meta() Shows order meta data.
  */
 do_action( 'woocommerce_email_order_meta', $order, $sent_to_admin, $plain_text, $email );
 
 /**
+ * Show customer details
+ *
  * @hooked WC_Emails::customer_details() Shows customer details
  * @hooked WC_Emails::email_address() Shows email address
  */
 do_action( 'woocommerce_email_customer_details', $order, $sent_to_admin, $plain_text, $email );
 
 /**
+ * Output the email footer
+ *
  * @hooked WC_Emails::email_footer() Output the email footer
  */
 do_action( 'woocommerce_email_footer', $email );

@@ -15,7 +15,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 do_action( 'woocommerce_email_header', $email_heading, $email );
 
 ?>
-	<p><?php printf( __( '%1$s has marked  order #%2$s as shipped.', 'wc-vendors' ), wcv_get_vendor_shop_name( $vendor_id ), $order->get_id() ); ?></p>
+	<?php // translators: %1$s - Name used to refer to vendor, %2$s - Order number ?>
+	<p><?php echo esc_attr( sprintf( __( '%1$s has marked  order #%2$s as shipped.', 'wc-vendors' ), wcv_get_vendor_shop_name( $vendor_id ), $order->get_id() ) ); ?></p>
 <?php
 
 

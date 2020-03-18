@@ -14,21 +14,24 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $text_align = is_rtl() ? 'right' : 'left';
 
+$address  = $order->get_formatted_billing_address();
+$shipping = $order->get_formatted_shipping_address()
+
 ?>
 <table id="addresses" cellspacing="0" cellpadding="0"
 	   style="width: 100%; vertical-align: top; margin-bottom: 40px; padding:0;" border="0">
 	<tr>
-		<td style="text-align:<?php echo $text_align; ?>; font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif; border:0; padding:0;"
+		<td style="text-align:<?php echo esc_attr( $text_align ); ?>; font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif; border:0; padding:0;"
 			valign="top" width="50%">
 			<?php if ( $show_billing_address || $show_customer_billing_name || $show_customer_phone || $show_customer_email ) : ?>
-				<h2><?php _e( 'Billing address', 'wc-vendors' ); ?></h2>
+				<h2><?php esc_attr_e( 'Billing address', 'wc-vendors' ); ?></h2>
 
 				<address class="address">
 					<?php if ( $show_customer_billing_name ) : ?>
 						<?php echo esc_html( $customer_billing_name ); ?><br/>
 					<?php endif; ?>
 					<?php if ( $show_billing_address ) : ?>
-						<?php echo ( $address = $order->get_formatted_billing_address() ) ? $address : __( 'N/A', 'wc-vendors' ); ?>
+						<?php echo $address ? wp_kses_post( $address ) : esc_attr( __( 'N/A', 'wc-vendors' ) ); ?>
 					<?php endif; ?>
 					<?php if ( $show_customer_phone ) : ?>
 						<?php if ( $order->get_billing_phone() ) : ?>
@@ -44,17 +47,17 @@ $text_align = is_rtl() ? 'right' : 'left';
 			<?php endif; ?>
 		</td>
 		<?php if ( $show_shipping_address || $show_customer_shipping_name ) : ?>
-			<?php if ( ! wc_ship_to_billing_address_only() && $order->needs_shipping_address() && ( $shipping = $order->get_formatted_shipping_address() ) ) : ?>
-				<td style="text-align:<?php echo $text_align; ?>; font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif; padding:0;"
+			<?php if ( ! wc_ship_to_billing_address_only() && $order->needs_shipping_address() && $shipping ) : ?>
+				<td style="text-align:<?php echo esc_attr( $text_align ); ?>; font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif; padding:0;"
 					valign="top" width="50%">
-					<h2><?php _e( 'Shipping address', 'wc-vendors' ); ?></h2>
+					<h2><?php esc_attr_e( 'Shipping address', 'wc-vendors' ); ?></h2>
 
 					<address class="address">
 						<?php if ( $show_customer_shipping_name ) : ?>
 							<?php echo esc_html( $customer_shipping_name ); ?><br/>
 						<?php endif; ?>
 						<?php if ( $show_shipping_address ) : ?>
-							<?php echo $shipping; ?>
+							<?php echo wp_kses_post( $shipping ); ?>
 						<?php endif; ?>
 					</address>
 				</td>

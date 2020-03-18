@@ -12,8 +12,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-echo '= ' . $email_heading . " =\n\n";
+echo '= ' . esc_attr( $email_heading ) . " =\n\n";
 
-echo sprintf( __( '%1$s has marked  order #%2$s as shipped.' ), wcv_get_vendor_shop_name( $vendor_id ), $order->get_id() ) . "\n\n";
+// translators: %1$s - The name used to refer to a Vendor, %2$s - The order number
+echo esc_attr( sprintf( __( '%1$s has marked  order #%2$s as shipped.' ), wcv_get_vendor_shop_name( $vendor_id ), $order->get_id() ) ) . "\n\n";
 
-echo apply_filters( 'woocommerce_email_footer_text', get_option( 'woocommerce_email_footer_text' ) );
+echo esc_attr( apply_filters( 'woocommerce_email_footer_text', get_option( 'woocommerce_email_footer_text' ) ) );

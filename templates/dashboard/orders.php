@@ -15,10 +15,10 @@ jQuery(function () {
 		e.preventDefault();
 		var id = jQuery(this).closest('tr').data('order-id');
 
-		if ( jQuery(this).text() == "<?php _e( 'Hide items', 'wcvendors' ); ?>" ) {
-			jQuery(this).text("<?php _e( 'View items', 'wcvendors' ); ?>");
+		if ( jQuery(this).text() == "<?php esc_attr_e( 'Hide items', 'wcvendors' ); ?>" ) {
+			jQuery(this).text("<?php esc_attr_e( 'View items', 'wcvendors' ); ?>");
 		} else {
-			jQuery(this).text("<?php _e( 'Hide items', 'wcvendors' ); ?>");
+			jQuery(this).text("<?php esc_attr_e( 'Hide items', 'wcvendors' ); ?>");
 		}
 
 		jQuery("#view-items-" + id).fadeToggle();
@@ -32,7 +32,7 @@ jQuery(function () {
 });
 </script>
 
-<h2><?php _e( 'Orders', 'wcvendors' ); ?></h2>
+<h2><?php esc_attr_e( 'Orders', 'wcvendors' ); ?></h2>
 
 <?php global $woocommerce; ?>
 
@@ -44,30 +44,30 @@ if ( function_exists( 'wc_print_notices' ) ) {
 <table class="table table-condensed table-vendor-sales-report">
 	<thead>
 	<tr>
-	<th class="product-header"><?php _e( 'Order', 'wcvendors' ); ?></th>
-	<th class="quantity-header"><?php _e( 'Shipping', 'wcvendors' ); ?></th>
-	<th class="commission-header"><?php _e( 'Total', 'wcvendors' ); ?></th>
-	<th class="rate-header"><?php _e( 'Date', 'wcvendors' ); ?></th>
-	<th class="rate-header"><?php _e( 'Links', 'wcvendors' ); ?></th>
+	<th class="product-header"><?php esc_attr_e( 'Order', 'wcvendors' ); ?></th>
+	<th class="quantity-header"><?php esc_attr_e( 'Shipping', 'wcvendors' ); ?></th>
+	<th class="commission-header"><?php esc_attr_e( 'Total', 'wcvendors' ); ?></th>
+	<th class="rate-header"><?php esc_attr_e( 'Date', 'wcvendors' ); ?></th>
+	<th class="rate-header"><?php esc_attr_e( 'Links', 'wcvendors' ); ?></th>
 	</thead>
 	<tbody>
 
 	<?php
 	if ( ! empty( $order_summary ) ) :
-		$totals     = 0;
+			$_totals  = 0;
 		   $user_id = get_current_user_id();
 		?>
 
 		<?php
-		foreach ( $order_summary as $order ) :
+		foreach ( $order_summary as $_order ) : // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 
-			$order          = new WC_Order( $order->order_id );
-			$order_id       = ( version_compare( WC_VERSION, '2.7', '<' ) ) ? $order->id : $order->get_id();
+			$_order          = new WC_Order( $_order->order_id );
+			$order_id       = ( version_compare( WC_VERSION, '2.7', '<' ) ) ? $_order->id : $_order->get_id();
 			$valid_items    = WCV_Queries::get_products_for_order( $order_id );
 			$valid          = array();
 			$needs_shipping = false;
 
-			$items = $order->get_items();
+			$items = $_order->get_items();
 
 			foreach ( $items as $key => $value ) {
 				if ( in_array( $value['variation_id'], $valid_items ) || in_array( $value['product_id'], $valid_items ) ) {
@@ -82,22 +82,22 @@ if ( function_exists( 'wc_print_notices' ) ) {
 			$shippers = (array) get_post_meta( $order_id, 'wc_pv_shipped', true );
 			$shipped  = in_array( $user_id, $shippers );
 
-			$order_date = ( version_compare( WC_VERSION, '2.7', '<' ) ) ? $order->order_date : $order->get_date_created();
+			$order_date = ( version_compare( WC_VERSION, '2.7', '<' ) ) ? $_order->order_date : $_order->get_date_created();
 
 			?>
 
-			<tr id="order-<?php echo $order_id; ?>" data-order-id="<?php echo $order_id; ?>">
-				<td><?php echo $order->get_order_number(); ?></td>
-				<td><?php echo apply_filters( 'wcvendors_dashboard_google_maps_link', '<a target="_blank" href="' . esc_url( 'http://maps.google.com/maps?&q=' . urlencode( esc_html( preg_replace( '#<br\s*/?>#i', ', ', $order->get_formatted_shipping_address() ) ) ) . '&z=16' ) . '">' . esc_html( preg_replace( '#<br\s*/?>#i', ', ', $order->get_formatted_shipping_address() ) ) . '</a>' ); ?></td>
+			<tr id="order-<?php echo esc_attr( $order_id ); ?>" data-order-id="<?php echo esc_attr( $order_id ); ?>">
+				<td><?php echo esc_attr( $_order->get_order_number() ); ?></td>
+				<td><?php echo wp_kses_post( apply_filters( 'wcvendors_dashboard_google_maps_link', '<a target="_blank" href="' . esc_url_raw( 'http://maps.google.com/maps?&q=' . urlencode( esc_html( preg_replace( '#<br\s*/?>#i', ', ', $_order->get_formatted_shipping_address() ) ) ) . '&z=16' ) . '">' . esc_html( preg_replace( '#<br\s*/?>#i', ', ', $_order->get_formatted_shipping_address() ) ) . '</a>' ) ); ?></td>
 				<td>
 				<?php
-				$sum     = WCV_Queries::sum_for_orders( array( $order_id ), array( 'vendor_id' => get_current_user_id() ) );
-				$total   = $sum[0]->line_total;
-				$totals += $total;
-				echo wc_price( $total );
+				$sum      = WCV_Queries::sum_for_orders( array( $order_id ), array( 'vendor_id' => get_current_user_id() ) );
+				$total    = $sum[0]->line_total;
+				$_totals += $total;
+				echo esc_attr( wc_price( $total ) );
 				?>
 				</td>
-				<td><?php echo date_i18n( wc_date_format(), strtotime( $order_date ) ); ?></td>
+				<td><?php echo esc_attr( date_i18n( wc_date_format(), strtotime( $order_date ) ) ); ?></td>
 				<td>
 				<?php
 				$order_actions = array(
@@ -128,7 +128,7 @@ if ( function_exists( 'wc_print_notices' ) ) {
 					);
 				}
 
-				$order_actions = apply_filters( 'wcvendors_order_actions', $order_actions, $order );
+				$order_actions = apply_filters( 'wcvendors_order_actions', $order_actions, $_order );
 
 				if ( $order_actions ) {
 					$output = array();
@@ -141,13 +141,13 @@ if ( function_exists( 'wc_print_notices' ) ) {
 							$data['content']
 						);
 					}
-					echo implode( ' | ', $output );
+					echo esc_attr( implode( ' | ', $output ) );
 				}
 				?>
 				</td>
 			</tr>
 
-			<tr id="view-items-<?php echo $order_id; ?>" style="display:none;">
+			<tr id="view-items-<?php echo esc_attr( $order_id ); ?>" style="display:none;">
 				<td colspan="5">
 					<?php
 					$product_id = '';
@@ -157,10 +157,11 @@ if ( function_exists( 'wc_print_notices' ) ) {
 						$variation_detail = ! empty( $item['variation_id'] ) ? WCV_Orders::get_variation_data( $item['variation_id'] ) : '';
 
 						?>
-						<?php echo $item['qty'] . 'x ' . $item['name']; ?>
+						<?php echo esc_attr( $item['qty'] . 'x ' . $item['name'] ); ?>
 						<?php
 						if ( ! empty( $variation_detail ) ) {
-							echo '<br />' . $variation_detail;}
+							echo '<br />' . wp_kses_post( $variation_detail );
+						}
 						?>
 
 
@@ -172,7 +173,7 @@ if ( function_exists( 'wc_print_notices' ) ) {
 			<?php if ( class_exists( 'WC_Shipment_Tracking' ) ) : ?>
 			
 				<?php if ( is_array( $providers ) ) : ?>
-				<tr id="view-tracking-<?php echo $order_id; ?>" style="display:none;"> 
+				<tr id="view-tracking-<?php echo esc_attr( $order_id ); ?>" style="display:none;"> 
 					<td colspan="5">
 						<div class="order-tracking">
 							<?php
@@ -199,14 +200,14 @@ if ( function_exists( 'wc_print_notices' ) ) {
 
 			<tr>
 				<td><b>Total:</b></td>
-				<td colspan="4"><?php echo wc_price( $totals ); ?></td>
+				<td colspan="4"><?php echo esc_attr( wc_price( $_totals ) ); ?></td>
 			</tr>
 
 	<?php else : ?>
 
 		<tr>
 			<td colspan="4"
-				style="text-align:center;"><?php _e( 'You have no orders during this period.', 'wcvendors' ); ?></td>
+				style="text-align:center;"><?php esc_attr_e( 'You have no orders during this period.', 'wcvendors' ); ?></td>
 		</tr>
 
 	<?php endif; ?>

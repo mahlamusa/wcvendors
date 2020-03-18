@@ -12,9 +12,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-echo '= ' . $email_heading . " =\n\n";
+echo '= ' . esc_attr( $email_heading ) . " =\n\n";
 
-echo sprintf( __( 'You have received an order from %s.', 'wc-vendors' ), $customer_name ) . "\n\n";
+// translators: %s Customer name
+echo esc_attr( sprintf( __( 'You have received an order from %s.', 'wc-vendors' ), $customer_name ) ) . "\n\n";
 
 echo "=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n\n";
 
@@ -27,4 +28,4 @@ do_action( 'wcvendors_email_customer_details', $order, $sent_to_admin, $plain_te
 
 echo "\n=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n\n";
 
-echo apply_filters( 'woocommerce_email_footer_text', get_option( 'woocommerce_email_footer_text' ) );
+echo esc_attr( apply_filters( 'woocommerce_email_footer_text', get_option( 'woocommerce_email_footer_text' ) ) );

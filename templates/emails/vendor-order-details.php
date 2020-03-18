@@ -50,18 +50,20 @@ do_action( 'woocommerce_email_before_order_table', $order, $sent_to_admin, $plai
 		<tbody>
 		<?php do_action( 'wcv_email_vendor_notify_order_before_order_items', $order, $sent_to_admin, $plain_text, $email ); ?>
 		<?php
-		echo wcv_get_vendor_order_items(
-			$order,
-			array( // WPCS: XSS ok.
-				'show_sku'       => $sent_to_vendor,
-				'vendor_id'      => $vendor_id,
-				'vendor_items'   => $vendor_items,
-				'totals_display' => $totals_display,
-				'show_image'     => false,
-				'image_size'     => array( 32, 32 ),
-				'plain_text'     => $plain_text,
-				'sent_to_admin'  => $sent_to_admin,
-				'sent_to_vendor' => $sent_to_vendor,
+		echo wp_kses_post(
+			wcv_get_vendor_order_items(
+				$order,
+				array( // WPCS: XSS ok.
+					'show_sku'       => $sent_to_vendor,
+					'vendor_id'      => $vendor_id,
+					'vendor_items'   => $vendor_items,
+					'totals_display' => $totals_display,
+					'show_image'     => false,
+					'image_size'     => array( 32, 32 ),
+					'plain_text'     => $plain_text,
+					'sent_to_admin'  => $sent_to_admin,
+					'sent_to_vendor' => $sent_to_vendor,
+				)
 			)
 		);
 		?>
@@ -69,19 +71,19 @@ do_action( 'woocommerce_email_before_order_table', $order, $sent_to_admin, $plai
 		</tbody>
 		<tfoot>
 		<?php
-		$totals = wcv_get_vendor_item_totals( $order, $vendor_items, $vendor_id, $email, $totals_display );
+		$_totals = wcv_get_vendor_item_totals( $order, $vendor_items, $vendor_id, $email, $totals_display );
 
 		do_action( 'wcv_before_vendor_item_totals', $order, $vendor_id, $email, $totals, $colspan, $text_align );
 
-		if ( $totals ) {
+		if ( $_totals ) {
 			$i = 0;
-			foreach ( $totals as $total ) {
+			foreach ( $_totals as $total ) {
 				$i ++;
 				?>
 				<tr>
 					<th class="td" scope="row"
 						style="text-align:<?php echo esc_attr( $text_align ); ?>; <?php echo ( 1 === $i ) ? 'border-top-width: 4px;' : ''; ?>"><?php echo wp_kses_post( $total['label'] ); ?></th>
-					<td class="td" colspan="<?php echo $colspan; ?>"
+					<td class="td" colspan="<?php echo esc_attr( $colspan ); ?>"
 						style="text-align:<?php echo esc_attr( $text_align ); ?>; <?php echo ( 1 === $i ) ? 'border-top-width: 4px;' : ''; ?>"><?php echo wp_kses_post( $total['value'] ); ?></td>
 				</tr>
 				<?php
@@ -93,7 +95,7 @@ do_action( 'woocommerce_email_before_order_table', $order, $sent_to_admin, $plai
 		if ( $order->get_customer_note() ) {
 			?>
 			<tr>
-				<th class="td" scope="row" colspan="<?php echo $colspan; ?>"
+				<th class="td" scope="row" colspan="<?php echo esc_attr( $colspan ); ?>"
 					style="text-align:<?php echo esc_attr( $text_align ); ?>;"><?php esc_html_e( 'Note:', 'wc-vendors' ); ?></th>
 				<td class="td"
 					style="text-align:<?php echo esc_attr( $text_align ); ?>;"><?php echo wp_kses_post( wptexturize( $order->get_customer_note() ) ); ?></td>

@@ -13,11 +13,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * @hooked WC_Emails::email_header() Output the email header
+ * Output the email header
+ *
+ * @hooked WC_Emails::email_header()
  */
 do_action( 'woocommerce_email_header', $email_heading, $email ); ?>
 
-	<p><?php _e( 'You have received an order. The order is as follows:', 'wc-vendors' ); ?></p>
+	<p><?php esc_attr_e( 'You have received an order. The order is as follows:', 'wc-vendors' ); ?></p>
 
 <?php
 

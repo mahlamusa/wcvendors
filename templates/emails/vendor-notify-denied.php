@@ -15,11 +15,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 do_action( 'woocommerce_email_header', $email_heading, $email ); ?>
 
-	<p><?php echo $content; ?></p>
+	<p><?php echo wp_kses_post( $content ); ?></p>
 
-	<p><?php echo $reason; ?></p>
-
-	<p><?php printf( __( 'Applicant username: %s', 'wc-vendors' ), $user->user_login ); ?></p>
+	<p><?php echo wp_kses_post( $reason ); ?></p>
+<?php // translators: %s - Applicant username ?>
+	<p><?php echo esc_attr( sprintf( __( 'Applicant username: %s', 'wc-vendors' ), $user->user_login ) ); ?></p>
 
 <?php
 
