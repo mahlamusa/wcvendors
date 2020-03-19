@@ -11,20 +11,24 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <form method="post">
 	<?php wp_nonce_field( 'wcv-setup' ); ?>
-	<p
-		class="store-setup"><?php printf( __( 'Enable and disable capabilites of the %s', 'wc-vendors' ), lcfirst( wcv_get_vendor_name( false ) ) ); ?></p>
+	<p class="store-setup">
+		<?php // translators: %s The used to refer to Vendors ?>
+		<?php echo esc_attr( sprintf( __( 'Enable and disable capabilites of the %s', 'wc-vendors' ), lcfirst( wcv_get_vendor_name( false ) ) ) ); ?>
+	</p>
 
 	<table class="wcv-setup-table">
 		<thead>
 		<tr>
-			<td class="table-desc"><strong><?php _e( 'Products', 'wc-vendors' ); ?></strong></td>
+			<td class="table-desc"><strong><?php esc_attr_e( 'Products', 'wc-vendors' ); ?></strong></td>
 			<td class="table-check"></td>
 		</tr>
 		</thead>
 		<tbody>
 		<tr>
-			<td
-				class="table-desc"><?php printf( __( 'Allow %s to add/edit products', 'wc-vendors' ), lcfirst( wcv_get_vendor_name( false ) ) ); ?></td>
+			<td class="table-desc">
+				<?php // translators: %s - Name used to refer to Vendors ?>
+				<?php echo esc_attr( sprintf( __( 'Allow %s to add/edit products', 'wc-vendors' ), lcfirst( wcv_get_vendor_name( false ) ) ) ); ?>
+			</td>
 			<td class="table-check">
 				<input
 					type="checkbox"
@@ -37,8 +41,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 			</td>
 		</tr>
 		<tr>
-			<td
-				class="table-desc"><?php printf( __( 'Allow %s to edit published (live) products', 'wc-vendors' ), lcfirst( wcv_get_vendor_name( false ) ) ); ?></td>
+			<td class="table-desc">
+				<?php // translators: %s Name used to refer to Vendors. ?>
+				<?php echo esc_attr( sprintf( __( 'Allow %s to edit published (live) products', 'wc-vendors' ), lcfirst( wcv_get_vendor_name( false ) ) ) ); ?></td>
 			<td class="table-check">
 				<input
 					type="checkbox"
@@ -52,7 +57,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 		</tr>
 		<tr>
 			<td
-				class="table-desc"><?php printf( __( 'Allow %s to publish products without requiring approval.', 'wc-vendors' ), lcfirst( wcv_get_vendor_name( false ) ) ); ?></td>
+				class="table-desc">
+				<?php // translators: %s The name used to refer to vendors ?>
+				<?php echo esc_attr( sprintf( __( 'Allow %s to publish products without requiring approval.', 'wc-vendors' ), lcfirst( wcv_get_vendor_name( false ) ) ) ); ?></td>
 			<td class="table-check">
 				<input
 					type="checkbox"
@@ -71,14 +78,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<table class="wcv-setup-table">
 		<thead>
 		<tr>
-			<td class="table-desc"><strong><?php _e( 'Orders', 'wc-vendors' ); ?></strong></td>
+			<td class="table-desc"><strong><?php esc_attr_e( 'Orders', 'wc-vendors' ); ?></strong></td>
 			<td class="table-check"></td>
 		</tr>
 		</thead>
 		<tbody>
 		<tr>
-			<td
-				class="table-desc"><?php printf( __( 'Allow %s to manage orders', 'wc-vendors' ), lcfirst( wcv_get_vendor_name( false ) ) ); ?></td>
+			<td class="table-desc">
+				<?php // translators: %s The name used to refer to vendors ?>
+				<?php echo esc_attr( sprintf( __( 'Allow %s to manage orders', 'wc-vendors' ), lcfirst( wcv_get_vendor_name( false ) ) ) ); ?></td>
 			<td class="table-check">
 				<input
 					type="checkbox"
@@ -91,8 +99,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 			</td>
 		</tr>
 		<tr>
-			<td
-				class="table-desc"><?php printf( __( 'Allow %s to export their orders to a CSV file', 'wc-vendors' ), lcfirst( wcv_get_vendor_name( false ) ) ); ?></td>
+			<td class="table-desc">
+				<?php // translators: %s The name used to refer to vendors ?>
+				<?php echo esc_attr( sprintf( __( 'Allow %s to export their orders to a CSV file', 'wc-vendors' ), lcfirst( wcv_get_vendor_name( false ) ) ) ); ?></td>
 			<td class="table-check">
 				<input
 					type="checkbox"
@@ -105,8 +114,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 			</td>
 		</tr>
 		<tr>
-			<td
-				class="table-desc"><?php printf( __( 'Allow %s to view order notes', 'wc-vendors' ), lcfirst( wcv_get_vendor_name( false ) ) ); ?></td>
+			<td class="table-desc">
+				<?php // translators: %s The name used to refer to vendors ?>
+				<?php echo esc_attr( sprintf( __( 'Allow %s to view order notes', 'wc-vendors' ), lcfirst( wcv_get_vendor_name( false ) ) ) ); ?></td>
 			<td class="table-check">
 				<input
 					type="checkbox"
@@ -119,8 +129,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 			</td>
 		</tr>
 		<tr>
-			<td
-				class="table-desc"><?php printf( __( 'Allow %s to add order notes.', 'wc-vendors' ), lcfirst( wcv_get_vendor_name( false ) ) ); ?></td>
+			<td class="table-desc">
+				<?php // translators: %s The name used to refer to vendors ?>
+				<?php echo esc_attr( sprintf( __( 'Allow %s to add order notes.', 'wc-vendors' ), lcfirst( wcv_get_vendor_name( false ) ) ) ); ?></td>
 			<td class="table-check">
 				<input
 					type="checkbox"

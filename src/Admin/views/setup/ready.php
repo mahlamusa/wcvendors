@@ -46,36 +46,36 @@ if ( ! defined( 'ABSPATH' ) ) {
 				class="next-step-extra-info"><?php esc_html_e( 'Upgrade today to extend the features of your marketplace.', 'wc-vendors' ); ?></p>
 			<p class="next-step-heading"><?php esc_html_e( 'Features', 'wc-vendors' ); ?></p>
 			<ul>
-				<li><?php _e( 'Complete frontend dashboard for vendors', 'wc-vendors' ); ?></li>
-				<li><?php _e( 'Flat rate & table rate shipping module', 'wc-vendors' ); ?></li>
-				<li><?php _e( 'Coupons, ratings, reports, orders and more.', 'wc-vendors' ); ?></li>
-				<li><?php _e( 'Advanced commissions', 'wc-vendors' ); ?></li>
-				<li><?php _e( 'Premium support & updates', 'wc-vendors' ); ?></li>
+				<li><?php esc_attr_e( 'Complete frontend dashboard for vendors', 'wc-vendors' ); ?></li>
+				<li><?php esc_attr_e( 'Flat rate & table rate shipping module', 'wc-vendors' ); ?></li>
+				<li><?php esc_attr_e( 'Coupons, ratings, reports, orders and more.', 'wc-vendors' ); ?></li>
+				<li><?php esc_attr_e( 'Advanced commissions', 'wc-vendors' ); ?></li>
+				<li><?php esc_attr_e( 'Premium support & updates', 'wc-vendors' ); ?></li>
 			</ul>
 		</div>
 		<div class="wcv-wizard-next-step-action">
 			<p class="wcv-setup-actions step">
 				<a class="button button-primary button-large" href="https://www.wcvendors.com/products/wc-vendors-pro/">
-					<?php _e( 'Upgrade Now', 'wc-vendors' ); ?>
+					<?php esc_attr_e( 'Upgrade Now', 'wc-vendors' ); ?>
 				</a>
 			</p>
 		</div>
 	</li>
 	<li class="wcv-wizard-next-step-item">
 		<div class="wcv-wizard-next-step-description">
-			<p class="next-step-heading"><?php _e( 'Extend your marketplace', 'wc-vendors' ); ?></p>
-			<h3 class="next-step-description"><?php _e( 'Extensions', 'wc-vendors' ); ?></h3>
+			<p class="next-step-heading"><?php esc_attr_e( 'Extend your marketplace', 'wc-vendors' ); ?></p>
+			<h3 class="next-step-description"><?php esc_attr_e( 'Extensions', 'wc-vendors' ); ?></h3>
 			<p
-				class="next-step-extra-info"><?php _e( 'Extend your marketplace today with a variety of extensions from us and 3rd party developers.', 'wc-vendors' ); ?></p>
+				class="next-step-extra-info"><?php esc_attr_e( 'Extend your marketplace today with a variety of extensions from us and 3rd party developers.', 'wc-vendors' ); ?></p>
 		</div>
 		<div class="wcv-wizard-next-step-action">
 			<p class="wcv-setup-actions step">
 				<a class="button button-large" href="<?php echo esc_url( admin_url( 'admin.php?page=wcv-addons' ) ); ?>">
-					<?php _e( 'View Extensions', 'wc-vendors' ); ?>
+					<?php esc_attr_e( 'View Extensions', 'wc-vendors' ); ?>
 				</a>
 			</p>
 		</div>
 	</li>
 </ul>
-<h4 class="help-title"><?php _e( 'Need Help?', 'wc-vendors' ); ?></h4>
+<h4 class="help-title"><?php esc_attr_e( 'Need Help?', 'wc-vendors' ); ?></h4>
 <p class="next-steps-help-text"><?php echo wp_kses_post( $help_text ); ?></p>

@@ -17,14 +17,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<table class="wcv-setup-table">
 		<thead>
 		<tr>
-			<td class="table-desc"><strong><?php _e( 'General', 'wc-vendors' ); ?></strong></td>
+			<td class="table-desc"><strong><?php esc_attr_e( 'General', 'wc-vendors' ); ?></strong></td>
 			<td class="table-check"></td>
 		</tr>
 		</thead>
 		<tbody>
 		<tr>
-			<td
-				class="table-desc"><?php printf( __( 'Allow users to apply to become a %s', 'wc-vendors' ), lcfirst( wcv_get_vendor_name( false ) ) ); ?></td>
+			<td class="table-desc">
+				<?php // translators: %s The name used to refer to vendors ?>
+				<?php echo esc_attr( sprintf( __( 'Allow users to apply to become a %s', 'wc-vendors' ), lcfirst( wcv_get_vendor_name( false ) ) ) ); ?></td>
 			<td class="table-check">
 				<input
 					type="checkbox"
@@ -37,8 +38,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 			</td>
 		</tr>
 		<tr>
-			<td
-				class="table-desc"><?php printf( __( 'Manually approve %s applications', 'wc-vendors' ), lcfirst( wcv_get_vendor_name( false ) ) ); ?></td>
+			<td class="table-desc">
+				<?php // translators: %s The name used to refer to vendors ?>
+				<?php echo esc_attr( sprintf( __( 'Manually approve %s applications', 'wc-vendors' ), lcfirst( wcv_get_vendor_name( false ) ) ) ); ?></td>
 			<td class="table-check">
 				<input
 					type="checkbox"
@@ -51,8 +53,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 			</td>
 		</tr>
 		<tr>
-			<td
-				class="table-desc"><?php printf( __( 'Give any taxes to %s', 'wc-vendors' ), lcfirst( wcv_get_vendor_name( false ) ) ); ?></td>
+			<td class="table-desc">
+				<?php // translators: %s The name used to refer to vendors ?>
+				<?php echo esc_attr( sprintf( __( 'Give any taxes to %s', 'wc-vendors' ), lcfirst( wcv_get_vendor_name( false ) ) ) ); ?></td>
 			</td>
 			<td class="table-check">
 				<input
@@ -66,8 +69,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 			</td>
 		</tr>
 		<tr>
-			<td
-				class="table-desc"><?php printf( __( 'Give any shipping to %s', 'wc-vendors' ), lcfirst( wcv_get_vendor_name( false ) ) ); ?></td>
+			<td class="table-desc">
+				<?php // translators: %s The name used to refer to vendors ?>
+				<?php echo esc_attr( sprintf( __( 'Give any shipping to %s', 'wc-vendors' ), lcfirst( wcv_get_vendor_name( false ) ) ) ); ?></td>
 			</td>
 			<td class="table-check">
 				<input
@@ -83,10 +87,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 		</tbody>
 	</table>
 
-	<strong><?php _e( 'Commission', 'wc-vendors' ); ?></strong>
+	<strong><?php esc_attr_e( 'Commission', 'wc-vendors' ); ?></strong>
 
 	<p
-		class="store-setup"><?php _e( 'Commissions are calculated per product. The commission rate can be set globally, at a vendor level or at a product level.', 'wc-vendors' ); ?></p>
+		class="store-setup"><?php esc_attr_e( 'Commissions are calculated per product. The commission rate can be set globally, at a vendor level or at a product level.', 'wc-vendors' ); ?></p>
 
 	<!-- Vendor commission rate -->
 	<p class="store-setup wcv-setup-input">
@@ -98,7 +102,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			id="wcvendors_vendor_commission_rate"
 			name="wcvendors_vendor_commission_rate"
 			placeholder="%"
-			value="<?php echo $commission_rate; ?>"
+			value="<?php echo esc_attr( $commission_rate ); ?>"
 		/>
 	</p>
 	<p class="wcv-setup-actions step">

@@ -12,7 +12,7 @@
 	<h2><?php esc_html_e( 'Vendor Commissions', 'wc-vendors' ); ?>
 		<?php
 		if ( ! empty( $_REQUEST['s'] ) ) {
-			echo '<span class="subtitle">' . esc_html__( 'Search results for', 'wc-vendors' ) . ' "' . sanitize_text_field( $_REQUEST['s'] ) . '"</span>';
+			echo '<span class="subtitle">' . esc_html__( 'Search results for', 'wc-vendors' ) . ' "' . esc_attr( sanitize_text_field( wp_unslash( $_REQUEST['s'] ) ) ) . '"</span>';
 		}
 		?>
 	</h2>

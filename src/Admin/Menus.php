@@ -40,7 +40,7 @@ class Menus {
 		global $menu;
 
 		if ( current_user_can( 'manage_woocommerce' ) ) {
-			$menu[] = array( '', 'read', 'separator-woocommerce', '', 'wp-menu-separator wcvendors' );
+			$menu[] = array( '', 'read', 'separator-woocommerce', '', 'wp-menu-separator wcvendors' ); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 		}
 
 		add_menu_page( __( 'WC Vendors', 'wc-vendors' ), __( 'WC Vendors', 'wc-vendors' ), 'manage_woocommerce', 'wc-vendors', null, 'dashicons-cart', '50' );
@@ -75,21 +75,21 @@ class Menus {
 		Settings::get_settings_pages();
 
 		// Get current tab/section
-		$current_tab     = empty( $_GET['tab'] ) ? 'general' : sanitize_title( $_GET['tab'] );
-		$current_section = empty( $_REQUEST['section'] ) ? '' : sanitize_title( $_REQUEST['section'] );
+		$current_tab     = empty( $_GET['tab'] ) ? 'general' : sanitize_title( wp_unslash( $_GET['tab'] ) );
+		$current_section = empty( $_REQUEST['section'] ) ? '' : sanitize_title( wp_unslash( $_REQUEST['section'] ) );
 
 		// Save settings if data has been posted
-		if ( ! empty( $_POST ) ) {
+		if ( ! empty( $_POST ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
 			Settings::save();
 		}
 
 		// Add any posted messages
 		if ( ! empty( $_GET['wcv_error'] ) ) {
-			Settings::add_error( stripslashes( $_GET['wcv_error'] ) );
+			Settings::add_error( sanitize_text_field( wp_unslash( $_GET['wcv_error'] ) ) );
 		}
 
 		if ( ! empty( $_GET['wcv_message'] ) ) {
-			Settings::add_message( stripslashes( $_GET['wcv_message'] ) );
+			Settings::add_message( stripslashes( sanitize_text_field( wp_unslash( $_GET['wcv_message'] ) ) ) );
 		}
 	}
 
@@ -150,7 +150,6 @@ class Menus {
 	/**
 	 * Adds screen options for the commissions page
 	 *
-	 * @access public
 	 * @return bool
 	 * @version 1.0.0
 	 * @since 1.0.0
@@ -172,7 +171,6 @@ class Menus {
 	/**
 	 * Sets screen options for this page
 	 *
-	 * @access public
 	 * @return mixed
 	 * @version 1.0.0
 	 * @since 1.0.0

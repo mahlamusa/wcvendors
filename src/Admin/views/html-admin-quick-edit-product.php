@@ -11,13 +11,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <fieldset class="inline-edit-col-left">
 	<div id="wcvendors-fields-bulk" class="inline-edit-col">
-		<h4><?php _e( 'WC Vendors', 'wc-vendors' ); ?></h4>
+		<h4><?php esc_attr_e( 'WC Vendors', 'wc-vendors' ); ?></h4>
 
 		<?php do_action( 'wcvendors_product_quick_edit_start' ); ?>
 
 		<!-- Vendor Name -->
 		<label class="inline-edit-author-vendor">
-			<span class="title"><?php echo wcv_get_vendor_name(); ?></span>
+			<span class="title"><?php echo esc_attr( wcv_get_vendor_name() ); ?></span>
 			<span class="input-text-wrap">
 					<?php
 					wp_dropdown_users(
@@ -36,7 +36,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 		<?php if ( apply_filters( 'wcvendors_quick_edit_commission', true ) ) : ?>
 			<label class="inline-edit-commission-rate">
-				<span class="title"><?php _e( 'Commission', 'wc-vendors' ); ?></span>
+				<span class="title"><?php esc_attr_e( 'Commission', 'wc-vendors' ); ?></span>
 				<span class="input-text-wrap">
 					<input type="text" name="_wcv_commission_rate" class="text wcv_commission_rate"
 						   placeholder="<?php esc_attr_e( 'Commission rate %', 'wc-vendors' ); ?>" value=""/>
@@ -48,7 +48,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 		<input type="hidden" name="wcvendors_quick_edit" value="1"/>
 		<input type="hidden" name="wcvendors_quick_edit_nonce"
-			   value="<?php echo wp_create_nonce( 'wcvendors_quick_edit_nonce' ); ?>"/>
+			   value="<?php echo esc_attr( wp_create_nonce( 'wcvendors_quick_edit_nonce' ) ); ?>"/>
 	</div>
 </fieldset>
 			
