@@ -3,7 +3,8 @@
  * WooCommerce Meta Boxes
  * Sets up the write panels used by products and orders (custom post types).
  *
- * @package WCVendors/Admin
+ * @package    WCVendors
+ * @subpackage Admin
  */
 
 namespace WCVendors\Admin;
@@ -113,12 +114,12 @@ class MetaBoxes {
 	 * @param int $post_id Post ID.
 	 */
 	public function save( $post_id ) {
-		$product_type = empty( $_POST['product-type'] ) ? WC_Product_Factory::get_product_type( $post_id ) : sanitize_title( stripslashes( $_POST['product-type'] ) );
+		$product_type = empty( $_POST['product-type'] ) ? WC_Product_Factory::get_product_type( $post_id ) : sanitize_title( wp_unslash( $_POST['product-type'] ) );
 		$classname    = WC_Product_Factory::get_product_classname( $post_id, $product_type ? $product_type : 'simple' );
 		$product      = new $classname( $post_id );
 
 		if ( isset( $_POST['_wcv_commission_rate'] ) ) {
-			$product->update_meta_data( '_wcv_commission_rate', wc_clean( $_POST['_wcv_commission_rate'] ) );
+			$product->update_meta_data( '_wcv_commission_rate', sanitize_text_field( wp_unslash( $_POST['_wcv_commission_rate'] ) ) );
 		} else {
 			$product->delete_meta_data( '_wcv_commission_rate' );
 		}

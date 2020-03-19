@@ -2,7 +2,8 @@
 /**
  * Load admin assets
  *
- * @package WCVendors/Admin
+ * @package WCVendors
+ * @subpackage Admin
  */
 
 namespace WCVendors\Admin;

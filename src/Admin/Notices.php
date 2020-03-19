@@ -2,7 +2,8 @@
 /**
  * Display notices in admin
  *
- * @package     WCVendors/Admin
+ * @package    WCVendors
+ * @subpackage Admin
  */
 
 namespace WCVendors\Admin;
@@ -118,12 +119,12 @@ class Notices {
 	 */
 	public static function hide_notices() {
 		if ( isset( $_GET['wcv-hide-notice'] ) && isset( $_GET['_wcv_notice_nonce'] ) ) {
-			if ( ! wp_verify_nonce( $_GET['_wcv_notice_nonce'], 'wcvendors_hide_notices_nonce' ) ) {
-				wp_die( __( 'Action failed. Please refresh the page and retry.', 'wcvendors' ) );
+			if ( ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['_wcv_notice_nonce'] ) ), 'wcvendors_hide_notices_nonce' ) ) {
+				wp_die( esc_attr( __( 'Action failed. Please refresh the page and retry.', 'wcvendors' ) ) );
 			}
 
 			if ( ! current_user_can( 'manage_woocommerce' ) ) {
-				wp_die( __( 'Cheatin&#8217; huh?', 'wcvendors' ) );
+				wp_die( esc_attr( __( 'Cheatin&#8217; huh?', 'wcvendors' ) ) );
 			}
 
 			$hide_notice = sanitize_text_field( $_GET['wcv-hide-notice'] );
@@ -139,7 +140,7 @@ class Notices {
 		$notices = self::get_notices();
 
 		if ( ! empty( $notices ) ) {
-			wp_enqueue_style( 'wcvendors-activation', plugins_url( '/assets/css/activation.css', WC_PLUGIN_FILE ) );
+			wp_enqueue_style( 'wcvendors-activation', plugins_url( '/assets/css/activation.css', WC_PLUGIN_FILE ), array(), WCV_VERSION );
 			foreach ( $notices as $notice ) {
 				if ( ! empty( self::$core_notices[ $notice ] ) && apply_filters( 'wcvendors_show_admin_notice', true, $notice ) ) {
 					add_action( 'admin_notices', array( __CLASS__, self::$core_notices[ $notice ] ) );

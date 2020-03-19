@@ -592,8 +592,8 @@ class Settings extends WC_Admin_Settings {
 					$value = wc_clean( $raw_value );
 
 					if ( 'custom' === $value ) {
-						$width_ratio  = wc_clean( wp_unslash( $_POST['thumbnail_cropping_aspect_ratio_width'] ) );
-						$height_ratio = wc_clean( wp_unslash( $_POST['thumbnail_cropping_aspect_ratio_height'] ) );
+						$width_ratio  = isset( $_POST['thumbnail_cropping_aspect_ratio_width'] ) ? sanitize_text_field( wp_unslash( $_POST['thumbnail_cropping_aspect_ratio_width'] ) ) : 1;
+						$height_ratio = isset( $_POST['thumbnail_cropping_aspect_ratio_height'] ) ? sanitize_text_field( wp_unslash( $_POST['thumbnail_cropping_aspect_ratio_height'] ) ) : 1;
 						$value        = $width_ratio . ':' . $height_ratio;
 					}
 					break;

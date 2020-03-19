@@ -2,8 +2,8 @@
 /**
  * The general admin settings.
  *
- * @package WCVendors/Admin/Settings
- * @phpcs:disable WordPress.WP.I18n
+ * @package WCVendors
+ * @subpackage Admin/Settings
  */
 
 namespace WCVendors\Admin\Settings;
@@ -57,28 +57,36 @@ class General extends Base {
 				'id'   => 'general_options',
 			),
 			array(
+				// translators: %s - Name used to refer to a Vendor.
 				'title'   => sprintf( __( '%s Registration', 'wc-vendors' ), wcv_get_vendor_name() ),
+				// translators: %s - Name used to refer to a Vendor.
 				'desc'    => sprintf( __( 'Allow users to apply to become a %s', 'wc-vendors' ), lcfirst( wcv_get_vendor_name() ) ),
 				'id'      => 'wcvendors_vendor_allow_registration',
 				'default' => 'no',
 				'type'    => 'checkbox',
 			),
 			array(
+				// translators: %s - Name used to refer to a Vendor.
 				'title'   => sprintf( __( '%s Approval', 'wc-vendors' ), wcv_get_vendor_name() ),
+				// translators: %s - Name used to refer to a Vendor.
 				'desc'    => sprintf( __( 'Manually approve all %s applications', 'wc-vendors' ), lcfirst( wcv_get_vendor_name() ) ),
 				'id'      => 'wcvendors_vendor_approve_registration',
 				'default' => 'no',
 				'type'    => 'checkbox',
 			),
 			array(
+				// translators: %s - Name used to refer to a Vendor.
 				'title'   => sprintf( __( '%s Taxes', 'wc-vendors' ), wcv_get_vendor_name() ),
+				// translators: %s - Name used to refer to a Vendor.
 				'desc'    => sprintf( __( 'Give any taxes to the %s', 'wc-vendors' ), wcv_get_vendor_name() ),
 				'id'      => 'wcvendors_vendor_give_taxes',
 				'default' => 'no',
 				'type'    => 'checkbox',
 			),
 			array(
+				// translators: %s - Name used to refer to a Vendor.
 				'title'   => sprintf( __( '%s Shipping', 'wc-vendors' ), wcv_get_vendor_name() ),
+				// translators: %s - Name used to refer to a Vendor.
 				'desc'    => sprintf( __( 'Give any shipping to the %s', 'wc-vendors' ), wcv_get_vendor_name() ),
 				'id'      => 'wcvendors_vendor_give_shipping',
 				'default' => 'no',

@@ -2,7 +2,8 @@
 /**
  * WC Vendors Post Types Admin
  *
- * @package WCVendors/Admin
+ * @package    WCVendors
+ * @subpackage Admin
  */
 
 namespace WCVendors\Admin;

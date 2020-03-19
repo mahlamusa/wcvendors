@@ -2,7 +2,8 @@
 /**
  * Adds settings to the permalinks admin settings page
  *
- * @package WCVendors/Admin
+ * @package    WCVendors
+ * @subpackage Admin
  */
 
 namespace WCVendors\Admin;
@@ -81,7 +82,7 @@ class PermalinkSettings {
 			}
 
 			$permalinks                     = (array) get_option( 'wcvendors_permalinks', array() );
-			$permalinks['vendor_shop_base'] = wc_sanitize_permalink( trim( $_POST['vendor_shop_base'] ) );
+			$permalinks['vendor_shop_base'] = isset( $_POST['vendor_shop_base'] ) ? esc_url_raw( trim( $_POST['vendor_shop_base'] ) ) : '';
 
 			update_option( 'wcvendors_permalinks', $permalinks );
 

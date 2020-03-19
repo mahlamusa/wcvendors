@@ -4,8 +4,8 @@
  *
  * A class that generates the commission list.
  *
- * @package     WCVendors
- * @subpackage  Admin
+ * @package    WCVendors
+ * @subpackage Admin
  * 
  * @version 3.0.0
  * @since   2.0.0
@@ -178,21 +178,21 @@ class CommissionTable extends \WP_List_Table {
 			$vendor            = '';
 
 			if ( ! empty( $_REQUEST['s'] ) ) {
-				$order_id = $_REQUEST['s'];
+				$order_id = sanitize_text_field( wp_unslash( $_REQUEST['s'] ) );
 
 			} else {
 				if ( ! empty( $_REQUEST['m'] ) ) {
 
-					$year  = substr( $_REQUEST['m'], 0, 4 );
-					$month = substr( $_REQUEST['m'], 4, 2 );
+					$year  = substr( sanitize_text_field( wp_unslash( $_REQUEST['m'] ) ), 0, 4 );
+					$month = substr( sanitize_text_field( wp_unslash( $_REQUEST['m'] ) ), 4, 2 );
 				}
 
 				if ( ! empty( $_REQUEST['commission_status'] ) ) {
-					$commission_status = $_REQUEST['commission_status'];
+					$commission_status = sanitize_text_field( wp_unslash( $_REQUEST['commission_status'] ) );
 				}
 
 				if ( ! empty( $_REQUEST['vendor'] ) ) {
-					$vendor = $_REQUEST['vendor'];
+					$vendor = sanitize_text_field( wp_unslash( $_REQUEST['vendor'] ) );
 				}
 			}
 
@@ -203,7 +203,8 @@ class CommissionTable extends \WP_List_Table {
 				'data-month'             => esc_attr( $month ),
 				'data-commission_status' => esc_attr( $commission_status ),
 				'data-vendor'            => esc_attr( $vendor ),
-				'download='              => esc_attr( sprintf( __( 'commissions-%s.csv', 'wc-vendors' ), date( 'm-d-Y' ) ) ),
+				// translators: %s - The date the CSV was exported.
+				'download='              => esc_attr( sprintf( __( 'commissions-%s.csv', 'wc-vendors' ), gmdate( 'm-d-Y' ) ) ),
 			);
 
 			echo '<div class="alignleft actions">';
@@ -264,7 +265,7 @@ class CommissionTable extends \WP_List_Table {
 					selected( $m, $year . $month, false ),
 					esc_attr( $month->year . $month ),
 					/* translators: 1: month name, 2: 4-digit year */
-					sprintf( __( '%1$s %2$d', 'wc-vendors' ), $wp_locale->get_month( $month ), $year )
+					esc_attr( sprintf( __( '%1$s %2$d', 'wc-vendors' ), $wp_locale->get_month( $month ), $year ) )
 				);
 			}
 			?>
@@ -423,7 +424,8 @@ class CommissionTable extends \WP_List_Table {
 
 					$order_item = WC_Order_Factory::get_order_item( $item->order_item_id );
 
-					if ( $metadata = $order_item->get_formatted_meta_data() ) {
+					$metadata = $order_item->get_formatted_meta_data();
+					if ( $metadata ) {
 						foreach ( $metadata as $meta_id => $meta ) {
 							// Skip hidden core fields
 							if ( in_array(
@@ -448,7 +450,7 @@ class CommissionTable extends \WP_List_Table {
 							) ) {
 								continue;
 							}
-
+							// translators: 1 - Display text, 2 - Meta value
 							$var_attributes .= sprintf( __( '<br /><small>( %1$s: %2$s )</small>', 'wc-vendors' ), wp_kses_post( rawurldecode( $meta->display_key ) ), wp_kses_post( $meta->value ) );
 						}
 					}
@@ -457,7 +459,8 @@ class CommissionTable extends \WP_List_Table {
 				}
 
 				if ( is_object( $product ) && $product->get_sku() ) {
-					$sku = sprintf( __( '%1$s %2$s: %s', 'wc-vendors' ), '<br />', 'SKU', $product->get_sku() );
+					// translators: 1 Html line break tag, 2 - SKU label, 3 - SKU value
+					$sku = sprintf( __( '%1$s %2$s: %3$s', 'wc-vendors' ), '<br />', 'SKU', $product->get_sku() );
 				}
 
 				if ( is_object( $product ) ) {
@@ -473,7 +476,6 @@ class CommissionTable extends \WP_List_Table {
 			case 'commission':
 				// Show commission, shipping, tax and total
 				return wc_price( sanitize_text_field( $item->total_commission_amount ) );
-
 			case 'commission_status':
 				$status = __( 'N/A', 'wc-vendors' );
 
@@ -488,7 +490,7 @@ class CommissionTable extends \WP_List_Table {
 				if ( 'void' === $item->commission_status ) {
 					$status = '<span class="wcv-void-status">' . esc_html__( 'VOID', 'wc-vendors' ) . '</span>';
 				}
-
+				break;
 			case 'paid_date':
 				// add how the commission was paid
 				return wcv_format_date( sanitize_text_field( $item->paid_date ) );
@@ -545,7 +547,7 @@ class CommissionTable extends \WP_List_Table {
 	 * @return bool
 	 */
 	public function no_items() {
-		_e( 'No commissions found.', 'wc-vendors' );
+		esc_attr_e( 'No commissions found.', 'wc-vendors' );
 
 		return true;
 	}
@@ -575,13 +577,12 @@ class CommissionTable extends \WP_List_Table {
 	/**
 	 * Processes bulk actions
 	 *
-	 * @access public
 	 * @since 1.0.0
 	 * @version 1.0.0
 	 * @return bool
 	 */
 	public function process_bulk_action() {
-		if ( empty( $_REQUEST['_wpnonce'] ) || ! wp_verify_nonce( $_REQUEST['_wpnonce'], 'bulk-commissions' ) ) {
+		if ( empty( $_REQUEST['_wpnonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['_wpnonce'], 'bulk-commissions' ) ) ) ) {
 			return;
 		}
 
@@ -637,7 +638,9 @@ class CommissionTable extends \WP_List_Table {
 		// }
 		// $processed++;
 		// }
-		echo '<div class="notice-success notice"><p>' . sprintf( _n( '%d item processed.', '%d items processed', $processed, 'wc-vendors' ), $processed ) . '</p></div>';
+
+		// translators: 1 - The number of items processed
+		echo '<div class="notice-success notice"><p>' . esc_attr( sprintf( _n( '%d item processed.', '%d items processed', $processed, 'wc-vendors' ), $processed ) ) . '</p></div>';
 
 		// WC_Product_Vendors_Utils::clear_reports_transients();
 		do_action( 'wcv_commission_list_bulk_action' );
@@ -667,7 +670,6 @@ class CommissionTable extends \WP_List_Table {
 	 * Print column headers, accounting for hidden and sortable columns.
 	 * this overrides WP core simply to make column headers use REQUEST instead of GET
 	 *
-	 * @access public
 	 * @since 1.0.0
 	 * @version 1.0.0
 	 * @param bool $with_id Whether to set the id attribute or not
@@ -676,11 +678,13 @@ class CommissionTable extends \WP_List_Table {
 	public function print_column_headers( $with_id = true ) {
 		list( $columns, $hidden, $sortable ) = $this->get_column_info();
 
-		$current_url = set_url_scheme( 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] );
+		$host        = isset( $_SERVER['HTTP_HOST'] ) ? sanitize_text_field( wp_unslash( $_SERVER['HTTP_HOST'] ) ) : '';
+		$request_url = isset( $_SERVER['REQUEST_URI'] ) ? esc_url_raw( $_SERVER['REQUEST_URI'] ) : '';
+		$current_url = set_url_scheme( 'http://' . $host . $request_url );
 		$current_url = remove_query_arg( 'paged', $current_url );
 
 		if ( isset( $_REQUEST['orderby'] ) ) {
-			$current_orderby = $_REQUEST['orderby'];
+			$current_orderby = sanitize_text_field( wp_unslash( $_REQUEST['orderby'] ) );
 		} else {
 			$current_orderby = '';
 		}
@@ -739,7 +743,7 @@ class CommissionTable extends \WP_List_Table {
 				$class = "class='" . join( ' ', $class ) . "'";
 			}
 
-			echo "<th scope='col' $id $class $style>$column_display_name</th>";
+			echo wp_kses_post( "<th scope='col' $id $class $style>$column_display_name</th>" );
 		}
 
 		return true;

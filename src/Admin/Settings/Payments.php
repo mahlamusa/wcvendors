@@ -2,8 +2,8 @@
 /**
  * The display settings class.
  *
- * @package WCVendors/Admin/Settings
- * @phpcs:disable WordPress.WP.I18n
+ * @package WCVendors
+ * @subpackage Admin/Settings
  */
 
 namespace WCVendors\Admin\Settings;
@@ -52,8 +52,9 @@ class Payments extends Base {
 		$settings = array(
 			// Shop Display Options.
 			array(
-				'title' => __( '', 'wc-vendors' ),
+				'title' => '',
 				'type'  => 'title',
+				// translators: %s - Name used to refer to Vendors.
 				'desc'  => sprintf( __( '<strong>Payments controls how your %s commission is paid out. To enable commission payments you will be required to purchase one of our available payment extensions. </strong> ', 'wc-vendors' ), lcfirst( wcv_get_vendor_name() ) ),
 				'id'    => 'payment_general_options',
 			),

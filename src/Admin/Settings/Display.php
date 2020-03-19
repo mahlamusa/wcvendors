@@ -2,8 +2,8 @@
 /**
  * The display settings class
  *
- * @package WCVendors/Admin/Settings
- * @phpcs:disable WordPress.WP.I18n
+ * @package WCVendors
+ * @subpackage Admin/Settings
  */
 
 namespace WCVendors\Admin\Settings;
@@ -56,7 +56,7 @@ class Display extends Base {
 
 				// Shop Display Options.
 				array(
-					'title' => __( '', 'wc-vendors' ),
+					'title' => __( '', 'wc-vendors' ), // phpcs:ignore WordPress.WP.I18n.NoEmptyStrings
 					'type'  => 'title',
 					'desc'  => sprintf( __( 'Labels are shown on the front end, in orders and emails.', 'wc-vendors' ), lcfirst( wcv_get_vendor_name() ) ),
 					'id'    => 'shop_options',
@@ -64,6 +64,7 @@ class Display extends Base {
 				array(
 					'title'    => __( 'Sold by', 'wc-vendors' ),
 					'desc'     => __( 'Enable sold by labels', 'wc-vendors' ),
+					// translators: %s - Name used to refer to Vendors.
 					'desc_tip' => sprintf( __( 'This enables the sold by labels used to show which %s shop the product belongs to', 'wc-vendors' ), lcfirst( wcv_get_vendor_name() ) ),
 					'id'       => 'wcvendors_display_label_sold_by_enable',
 					'default'  => 'yes',
@@ -77,14 +78,18 @@ class Display extends Base {
 					'default'  => __( 'Sold By', 'wc-vendors' ),
 				),
 				array(
+					// translators: %s - Name used to refer to a Vendor.
 					'title'   => sprintf( __( '%s Store Info', 'wc-vendors' ), wcv_get_vendor_name() ),
+					// translators: %s - Name used to refer to Vendors.
 					'desc'    => sprintf( __( 'Enable %s store info tab on the single product page', 'wc-vendors' ), wcv_get_vendor_name() ),
 					'id'      => 'wcvendors_label_store_info_enable',
 					'default' => 'yes',
 					'type'    => 'checkbox',
 				),
 				array(
+					// translators: %s - Name used to refer to a Vendor.
 					'title'   => sprintf( __( '%s store Info label', 'wc-vendors' ), wcv_get_vendor_name() ),
+					// translators: %s - Name used to refer to Vendors.
 					'desc'    => sprintf( __( 'The %s store info label', 'wc-vendors' ), lcfirst( wcv_get_vendor_name() ) ),
 					'id'      => 'wcvendors_display_label_store_info',
 					'type'    => 'text',
@@ -104,6 +109,7 @@ class Display extends Base {
 				array(
 					'title' => __( 'Pages', 'wc-vendors' ),
 					'type'  => 'title',
+					// translators: %s - Name used to refer to Vendors.
 					'desc'  => sprintf( __( 'These pages used on the front end by %s.', 'wc-vendors' ), lcfirst( wcv_get_vendor_name( false ) ) ),
 					'id'    => 'page_options',
 				),
@@ -114,15 +120,18 @@ class Display extends Base {
 					'default' => '',
 					'class'   => 'wc-enhanced-select-nostd',
 					'css'     => 'min-width:300px;',
+					// translators: %s - Name used to refer to Vendors.
 					'desc'    => sprintf( __( '<br />This sets the page used to display the front end %s dashboard. This page should contain the following shortcode. <code>[wcvendors_dashboard]</code>', 'wc-vendors' ), lcfirst( wcv_get_vendor_name( false ) ) ),
 				),
 				array(
-					'title'   => sprintf( __( '%s', 'wc-vendors' ), ucfirst( wcv_get_vendor_name( false ) ) ),
+					// translators: %s - Name used to refer to Vendors.
+					'title'   => sprintf( __( '%s', 'wc-vendors' ), ucfirst( wcv_get_vendor_name( false ) ) ), // phpcs:ignore WordPress.WP.I18n.NoEmptyStrings
 					'id'      => 'wcvendors_vendors_page_id',
 					'type'    => 'single_select_page',
 					'default' => '',
 					'class'   => 'wc-enhanced-select-nostd',
 					'css'     => 'min-width:300px;',
+					// translators: %1$s - Name used to refer to Vendors, %2$s - Website url.
 					'desc'    => sprintf( __( '<br />This sets the page used to display a paginated list of all %1$s stores. Your %1$s stores will be available at <code>%2$s/page-slug/store-name/</code><br />This page should contain the following shortcode. <code>[wcvendors_stores]</code>', 'wc-vendors' ), lcfirst( wcv_get_vendor_name() ), esc_html( home_url() ) ),
 				),
 				array(
@@ -132,6 +141,7 @@ class Display extends Base {
 					'default' => '',
 					'class'   => 'wc-enhanced-select-nostd',
 					'css'     => 'min-width:300px;',
+					// translators: %s - Name used to refer to a Vendor.
 					'desc'    => sprintf( __( '<br />This sets the page used to display the terms and conditions when a %s signs up.', 'wc-vendors' ), lcfirst( wcv_get_vendor_name() ) ),
 				),
 				array(
@@ -148,7 +158,9 @@ class Display extends Base {
 				),
 				array(
 					'title'    => __( 'Shop Header', 'wc-vendors' ),
+					// translators: %s - Name used to refer to a Vendor.
 					'desc'     => sprintf( __( 'Enable %s shop headers', 'wc-vendors' ), lcfirst( wcv_get_vendor_name() ) ),
+					// translators: %s - Name used to refer to Vendor.
 					'desc_tip' => sprintf( __( 'This enables the %s shop header template and disables the shop description text.', 'wc-vendors' ), lcfirst( wcv_get_vendor_name() ) ),
 					'id'       => 'wcvendors_display_shop_headers',
 					'default'  => 'no',
@@ -156,7 +168,9 @@ class Display extends Base {
 				),
 				array(
 					'title'    => __( 'Shop HTML', 'wc-vendors' ),
+					// translators: %s - Name used to refer to a Vendor.
 					'desc'     => sprintf( __( 'Allow HTML in %s shop desription', 'wc-vendors' ), lcfirst( wcv_get_vendor_name() ) ),
+					// translators: %s - Name used to refer to a Vendor.
 					'desc_tip' => sprintf( __( 'Enable HTML for a %s shop description. You can enable or disable this per vendor by editing the vendors user account.', 'wc-vendors' ), lcfirst( wcv_get_vendor_name( false ) ) ),
 					'id'       => 'wcvendors_display_shop_description_html',
 					'default'  => 'no',
@@ -165,6 +179,7 @@ class Display extends Base {
 				array(
 					'title'    => __( 'Display Name', 'wc-vendors' ),
 					'id'       => 'wcvendors_display_shop_display_name',
+					// translators: %s - Name used to refer to a Vendor.
 					'desc_tip' => sprintf( __( 'Select what will be used to display the %s name throughout the marketplace.', 'wc-vendors' ), lcfirst( wcv_get_vendor_name() ) ),
 					'default'  => 'shop_name',
 					'type'     => 'select',
@@ -172,7 +187,9 @@ class Display extends Base {
 					'options'  => array(
 						'display_name' => __( 'Display name', 'wc-vendors' ),
 						'shop_name'    => __( 'Shop name', 'wc-vendors' ),
+						// translators: %s - Name used to refer to a Vendor.
 						'user_login'   => sprintf( __( '%s Username', 'wc-vendors' ), wcv_get_vendor_name() ),
+						// translators: %s - Name used to refer to a Vendor.
 						'user_email'   => sprintf( __( '%s Email', 'wc-vendors' ), wcv_get_vendor_name() ),
 					),
 				),

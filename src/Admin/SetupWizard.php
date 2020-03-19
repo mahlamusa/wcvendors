@@ -90,9 +90,9 @@ class SetupWizard {
 		$suffix      = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 
 		wp_register_script( 'jquery-blockui', WC()->plugin_url() . '/assets/js/jquery-blockui/jquery.blockUI' . $suffix . '.js', array( 'jquery' ), '2.70', true );
-		wp_register_script( 'selectWoo', WC()->plugin_url() . '/assets/js/selectWoo/selectWoo.full' . $suffix . '.js', array( 'jquery' ), '1.0.0' );
+		wp_register_script( 'selectWoo', WC()->plugin_url() . '/assets/js/selectWoo/selectWoo.full' . $suffix . '.js', array( 'jquery' ), WCV_VERSION, true );
 
-		wp_register_script( 'wc-enhanced-select', WC()->plugin_url() . '/assets/js/admin/wc-enhanced-select' . $suffix . '.js', array( 'jquery', 'selectWoo' ), WC_VERSION );
+		wp_register_script( 'wc-enhanced-select', WC()->plugin_url() . '/assets/js/admin/wc-enhanced-select' . $suffix . '.js', array( 'jquery', 'selectWoo' ), WCV_VERSION, true );
 		wp_localize_script(
 			'wc-enhanced-select',
 			'wc_enhanced_select_params',
@@ -114,10 +114,10 @@ class SetupWizard {
 		);
 
 		// @todo fix the select2 styles in our admin.css
-		wp_enqueue_style( 'woocommerce_admin_styles', WC()->plugin_url() . '/assets/css/admin.css', array(), WC_VERSION );
+		wp_enqueue_style( 'woocommerce_admin_styles', WC()->plugin_url() . '/assets/css/admin.css', array(), WCV_VERSION );
 
 		wp_enqueue_style( 'wcv-setup', WCV_PLUGIN_URL . '/assets/css/wcv-setup.css', array( 'dashicons', 'install' ), WCV_VERSION );
-		wp_register_script( 'wcv-setup', WCV_PLUGIN_URL . '/assets/js/admin/wcv-setup' . $suffix . '.js', array( 'jquery', 'wc-enhanced-select', 'jquery-blockui', 'wp-util' ), WCV_VERSION );
+		wp_register_script( 'wcv-setup', WCV_PLUGIN_URL . '/assets/js/admin/wcv-setup' . $suffix . '.js', array( 'jquery', 'wc-enhanced-select', 'jquery-blockui', 'wp-util' ), WCV_VERSION, true);
 
 		if ( ! empty( $_POST['save_step'] ) && isset( $this->steps[ $this->step ]['handler'] ) ) {
 			call_user_func( $this->steps[ $this->step ]['handler'], $this );
@@ -229,7 +229,7 @@ class SetupWizard {
 		$manual_approval    = isset( $_POST['wcvendors_vendor_approve_registration'] ) ? sanitize_text_field( $_POST['wcvendors_vendor_approve_registration'] ) : '';
 		$vendor_taxes       = isset( $_POST['wcvendors_vendor_give_taxes'] ) ? sanitize_text_field( $_POST['wcvendors_vendor_give_taxes'] ) : '';
 		$vendor_shipping    = isset( $_POST['wcvendors_vendor_give_shipping'] ) ? sanitize_text_field( $_POST['wcvendors_vendor_give_shipping'] ) : '';
-		$commission_rate    = sanitize_text_field( $_POST['wcvendors_vendor_commission_rate'] );
+		$commission_rate    = isset( $_POST['wcvendors_vendor_commission_rate'] ) ? sanitize_text_field( wp_unslash( $_POST['wcvendors_vendor_commission_rate'] ) ) : '';
 
 		update_option( 'wcvendors_vendor_allow_registration', $allow_registration );
 		update_option( 'wcvendors_vendor_approve_registration', $manual_approval );
@@ -238,7 +238,7 @@ class SetupWizard {
 		update_option( 'wcvendors_vendor_commission_rate', $commission_rate );
 
 		WCVendors_Install::create_pages();
-		wp_redirect( esc_url_raw( $this->get_next_step_link() ) );
+		wp_safe_redirect( esc_url_raw( $this->get_next_step_link() ) );
 		exit;
 	}
 
@@ -281,7 +281,7 @@ class SetupWizard {
 		update_option( 'wcvendors_capability_order_read_notes', $view_order_notes );
 		update_option( 'wcvendors_capability_order_update_notes', $add_order_notes );
 
-		wp_redirect( esc_url_raw( $this->get_next_step_link() ) );
+		wp_safe_redirect( esc_url_raw( $this->get_next_step_link() ) );
 		exit;
 	}
 
@@ -304,17 +304,16 @@ class SetupWizard {
 	 */
 	public function wcv_setup_pages_save() {
 
-		$dashboard_page_id = sanitize_text_field( $_POST['wcvendors_dashboard_page_id'] );
-		$vendors_page_id   = sanitize_text_field( $_POST['wcvendors_vendors_page_id'] );
-		$terms_page_id     = sanitize_text_field( $_POST['wcvendors_vendor_terms_page_id'] );
+		$dashboard_page_id = isset( $_POST['wcvendors_dashboard_page_id'] ) ? sanitize_text_field( wp_unslash( $_POST['wcvendors_dashboard_page_id'] ) ) : '';
+		$vendors_page_id   = isset( $_POST['wcvendors_vendors_page_id'] ) ? sanitize_text_field( wp_unslash( $_POST['wcvendors_vendors_page_id'] ) ) : '';
+		$terms_page_id     = isset( $_POST['wcvendors_vendor_terms_page_id'] ) ? sanitize_text_field( wp_unslash( $_POST['wcvendors_vendor_terms_page_id'] ) ) : '';
 
 		update_option( 'wcvendors_dashboard_page_id', $dashboard_page_id );
 		update_option( 'wcvendors_vendors_page_id', $vendors_page_id );
 		update_option( 'wcvendors_vendor_terms_page_id', $terms_page_id );
 
-		wp_redirect( esc_url_raw( $this->get_next_step_link() ) );
+		wp_safe_redirect( esc_url_raw( $this->get_next_step_link() ) );
 		exit;
-
 	}
 
 	/**

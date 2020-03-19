@@ -2,8 +2,8 @@
 /**
  * The commission admin settings
  *
- * @package WCVendors/Admin/Settings
- * @phpcs:disable WordPress.WP.I18n
+ * @package    WCVendors
+ * @subpackage Admin/Settings
  */
 
 namespace WCVendors\Admin\Settings;
@@ -56,7 +56,9 @@ class Commission extends Base {
 				'id'   => 'commission_options',
 			),
 			array(
+				// translators: %s - Name used to refer to Vendors.
 				'title'   => sprintf( __( '%s Commission %%', 'wc-vendors' ), wcv_get_vendor_name() ),
+				// translators: %s - Name used to refer to Vendors.
 				'desc'    => sprintf( __( 'The global commission rate for your %s', 'wc-vendors' ), lcfirst( wcv_get_vendor_name( false ) ) ),
 				'id'      => 'wcvendors_vendor_commission_rate',
 				'css'     => 'width:50px;',
